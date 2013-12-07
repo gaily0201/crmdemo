@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.1.7//EN"
+	"http://struts.apache.org/dtds/struts-2.1.7.dtd">
+
+<struts>
+	<!-- 配置请求后缀名为.do -->
+	<constant name="struts.action.extension" value="do"/>
+	
+	<!-- 配置主题为简单主题 -->
+	<constant name="struts.ui.theme" value="simple"/>
+	
+	<!-- 配置struts2的模式ewing开发模式 -->
+	<constant name="struts.devMode" value="true"/>
+	
+	
+	<package name="crm" namespace="/crm" extends="struts-default">
+		<!-- 配置权限拦截器 -->
+		<interceptors>
+			<interceptor name="limitInterceptor" class="cn.gaily.crm.interceptor.LimitInterceptor"/>
+			<interceptor-stack name="limitStack">
+				<interceptor-ref name="defaultStack"/>
+				<interceptor-ref name="limitInterceptor">
+				</interceptor-ref>
+			</interceptor-stack>
+		</interceptors>
+		<!-- 权限检测，项目完成后放开 -->
+	<!-- 	<default-interceptor-ref name="limitStack"/> -->
+		<!-- 转发到没有权限的页面 -->
+		<global-results>
+			<result name="popmsg_popedom">/WEB-INF/page/popmsg_popedom.jsp</result>
+		</global-results>
+<!-- ////////////////////////////////////////处理客户////////////////////////////////////////////// -->
+		<action name="companyAction_*" class="cn.gaily.crm.web.action.CompanyAction" method="{1}">
+			<result name="{1}">/WEB-INF/page/crm/customer/base/{1}.jsp</result>
+			<result name="listAction" type="redirectAction">
+				<param name="actionName">companyAction_list</param>
+				<param name="nameSpace">/crm</param>
+			</result>
+			<!-- 处理共享 -->
+			<result name="showShareSetOne">/WEB-INF/page/crm/customer/base/shareSetOne.jsp</result>
+			<result name="showShareCancelOne">/WEB-INF/page/crm/customer/base/shareCancelOne.jsp</result>
+			<result name="showShareViewOne">/WEB-INF/page/crm/customer/base/shareViewOne.jsp</result>
+			<result name="updateShareSetOne" type="chain">
+				<param name="actionName">companyAction_showShareSetOne</param>
+				<param name="nameSpace">/crm</param>
+			</result>
+			<result name="updateshareCancelOne" type="chain">
+				<param name="actionName">companyAction_showShareCancelOne</param>
+				<param name="nameSpace">/crm</param>
+			</result>
+		</action>
+<!-- //////////////////////////////////////////处理联系人////////////////////////////////////////////// -->
+		<action name="linkmanAction_*" class="cn.gaily.crm.web.action.LinkmanAction" method="{1}">
+			<result name="{1}">/WEB-INF/page/crm/customer/linkman/{1}.jsp</result>
+		</action>
+	</package>
+	
+	<package name="sys" namespace="/sys" extends="struts-default">
+		
+		<!-- 配置权限拦截器 -->
+		<interceptors>
+			<interceptor name="limitInterceptor" class="cn.gaily.crm.interceptor.LimitInterceptor"/>
+			<interceptor-stack name="limitStack">
+				<interceptor-ref name="defaultStack"/>
+				<interceptor-ref name="limitInterceptor">
+					<param name="excludeMethods">isLogin,top,left</param>
+				</interceptor-ref>
+			</interceptor-stack>
+		</interceptors>
+		<!-- 权限检测，项目完成后放开 -->
+	<!-- 	<default-interceptor-ref name="limitStack"/> -->
+		<!-- 转发到没有权限的页面 -->
+		<global-results>
+			<result name="popmsg_popedom">/WEB-INF/page/popmsg_popedom.jsp</result>
+		</global-results>
+		
+		<!-- 处理菜单的action -->
+		<action name="menuAction_*" class="cn.gaily.crm.web.action.MenuAction" method="{1}">
+			<result name="{1}">/WEB-INF/page/menu/{1}.jsp</result>
+		</action>
+		
+		<!-- 处理部门的action -->
+		<action name="sysUserGroupAction_*" class="cn.gaily.crm.web.action.SysUserGroupAction" method="{1}">
+			<result name="{1}">/WEB-INF/page/sys/group/{1}.jsp</result>
+			<result name="listAction" type="redirectAction">
+				<param name="actionName">sysUserGroupAction_list</param>
+				<param name="nameSpace">/sys</param>
+			</result>
+		</action>
+		
+		<!-- 处理权限组的action -->
+		<action name="sysRoleAction_*" class="cn.gaily.crm.web.action.SysRoleAction" method="{1}">
+			<result name="{1}">/WEB-INF/page/sys/role/{1}.jsp</result>	
+			<result name="listAction" type="redirectAction">
+				<param name="actionName">sysRoleAction_list</param>
+				<param name="nameSpace">/sys</param>
+			</result>
+			
+			<!-- 处理功能权限 -->
+			<result name="listPopedom">/WEB-INF/page/sys/role/popedom/view.jsp</result>
+			<result name="updatePopedom" type="chain">
+				<param name="actionName">sysRoleAction_listPopedom</param>
+				<param name="nameSpace">/sys</param>
+			</result>
+			
+			<!-- 处理菜单权限 -->
+			<result name="listMenu">/WEB-INF/page/sys/role/menu/view.jsp</result>
+			<result name="updateMenu" type="chain">
+				<param name="actionName">sysRoleAction_listMenu</param>
+				<param name="nameSpace">/sys</param>
+			</result>
+		</action>
+		
+		<!-- 处理人事的action -->
+		<action name="sysUserAction_*" class="cn.gaily.crm.web.action.SysUserAction" method="{1}">
+			<result name="main">/WEB-INF/page/menu/main.jsp</result>
+			<result name="login">/WEB-INF/page/login.jsp</result>
+			<result name="{1}">/WEB-INF/page/sys/user/{1}.jsp</result>	
+			<result name="listAction" type="redirectAction">
+				<param name="actionName">sysUserAction_list.do</param>
+				<param name="nameSpace">/sys</param>
+			</result>
+		</action>
+		
+		
+	</package>
+</struts>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

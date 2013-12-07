@@ -1,0 +1,32 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE hibernate-configuration PUBLIC
+          "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+          "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+
+<hibernate-configuration>
+	<session-factory>
+		<property name="dialect">
+			org.hibernate.dialect.MySQLDialect
+		</property>
+		<property name="hibernate.hbm2ddl.auto">true</property>
+		<property name="hibernate.show_sql">true</property>
+
+		<mapping resource="cn/gaily/crm/domain/SysUserGroup.hbm.xml" />
+		<mapping resource="cn/gaily/crm/domain/SysRole.hbm.xml" />
+		<mapping resource="cn/gaily/crm/domain/SysUser.hbm.xml" />
+		<mapping resource="cn/gaily/crm/domain/SysPopedom.hbm.xml" />
+		<mapping
+			resource="cn/gaily/crm/domain/SysPopedomPrivilege.hbm.xml" />
+		<mapping resource="cn/gaily/crm/domain/SysMenu.hbm.xml" />
+		<mapping
+			resource="cn/gaily/crm/domain/SysMenuPrivilege.hbm.xml" />
+		<mapping resource="cn/gaily/crm/domain/Company.hbm.xml" />
+		<mapping resource="cn/gaily/crm/domain/SysCodeRule.hbm.xml" />
+		<mapping
+			resource="cn/gaily/crm/domain/SysDictionaryType.hbm.xml" />
+		<mapping resource="cn/gaily/crm/domain/City.hbm.xml" />
+		<mapping resource="cn/gaily/crm/domain/Province.hbm.xml" />
+		<mapping resource="cn/gaily/crm/domain/Linkman.hbm.xml" />
+
+	</session-factory>
+</hibernate-configuration>

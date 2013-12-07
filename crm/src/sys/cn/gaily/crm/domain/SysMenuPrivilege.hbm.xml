@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="cn.gaily.crm.domain.SysMenuPrivilege" table="sys_menu_privilege">
+        <composite-id name="id" class="cn.gaily.crm.domain.SysMenuPrivilegeId">
+          <key-property name="roleId" type="string">
+               <column name="roleId"  sql-type="varchar(36)"/>
+           </key-property>
+           <key-property name="menuModule" type="string">
+               <column name="menuModule"  sql-type="varchar(30)"/>
+           </key-property>
+           <key-property name="menuPrivilege" type="string">
+               <column name="menuPrivilege"  sql-type="varchar(30)"/>
+           </key-property>
+        </composite-id>		
+	</class>
+</hibernate-mapping>

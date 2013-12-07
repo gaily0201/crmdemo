@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-module
+  type="WEB"
+  name="crmdemo"
+  id="myeclipse.1383545269781"
+  context-root="/crmdemo"
+  j2ee-spec="5.0"
+  archive="crmdemo.war">
+  <attributes>
+    <attribute name="webrootdir" value="WebRoot" />
+  </attributes>
+</project-module>
+

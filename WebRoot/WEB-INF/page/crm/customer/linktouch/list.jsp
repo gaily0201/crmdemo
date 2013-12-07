@@ -118,7 +118,7 @@ function forward(strURL){
 <h3><img src="${pageContext.request.contextPath}/ui/images/menu/khlb.png" border="0">&nbsp;联系记录列表</h3>
 <div class="control">
   <button type='button' class='button' onMouseOver="this.className='button_over';" onMouseOut="this.className='button';"  
-          onClick="forward('${pageContext.request.contextPath}/crm/customer/linktouch/add.jsp')">
+          onClick="forward('${pageContext.request.contextPath}/crm/linktouchAction_add.do')">
           <img src="${pageContext.request.contextPath}/ui/images/button/xinjian.png" border='0' align='absmiddle'>&nbsp;新建</button>
   <button type='button' class='button' onMouseOver="this.className='button_over';" onMouseOut="this.className='button';"  
           onClick="delForm('${pageContext.request.contextPath}/crm/customer/linktouch/view.jsp')">
@@ -158,7 +158,6 @@ function forward(strURL){
   	</tr>
 </table>
 </form>
- <%@ include file="/include/page.jsp" %>
 </div> 
 </body>
 </html>

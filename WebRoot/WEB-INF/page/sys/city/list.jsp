@@ -145,7 +145,6 @@
 		</tr>
 </table>
 </form>
- <%@ include file="/include/page.jsp" %>
 </div>
 </body>
 </html>

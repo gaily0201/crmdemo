@@ -6,10 +6,8 @@
 <struts>
 	<!-- 配置请求后缀名为.do -->
 	<constant name="struts.action.extension" value="do"/>
-	
 	<!-- 配置主题为简单主题 -->
 	<constant name="struts.ui.theme" value="simple"/>
-	
 	<!-- 配置struts2的模式ewing开发模式 -->
 	<constant name="struts.devMode" value="true"/>
 	
@@ -30,6 +28,8 @@
 		<global-results>
 			<result name="popmsg_popedom">/WEB-INF/page/popmsg_popedom.jsp</result>
 		</global-results>
+		
+		
 <!-- ////////////////////////////////////////处理客户////////////////////////////////////////////// -->
 		<action name="companyAction_*" class="cn.gaily.crm.web.action.CompanyAction" method="{1}">
 			<result name="{1}">/WEB-INF/page/crm/customer/base/{1}.jsp</result>
@@ -54,17 +54,20 @@
 		<action name="linkmanAction_*" class="cn.gaily.crm.web.action.LinkmanAction" method="{1}">
 			<result name="{1}">/WEB-INF/page/crm/customer/linkman/{1}.jsp</result>
 		</action>
+<!-- //////////////////////////////////////// 处理联系记录///////////////////////////////////////////// -->
+		<action name="linktouchAction_*" class="cn.gaily.crm.web.action.LinktouchAction" method="{1}">
+			<result name="{1}">/WEB-INF/page/crm/customer/linktouch/{1}.jsp</result>
+		</action>
 	</package>
 	
 	<package name="sys" namespace="/sys" extends="struts-default">
-		
 		<!-- 配置权限拦截器 -->
 		<interceptors>
 			<interceptor name="limitInterceptor" class="cn.gaily.crm.interceptor.LimitInterceptor"/>
 			<interceptor-stack name="limitStack">
 				<interceptor-ref name="defaultStack"/>
 				<interceptor-ref name="limitInterceptor">
-					<param name="excludeMethods">isLogin,top,left</param>
+					<param name="excludeMethods">isLogin,top,left,right</param>
 				</interceptor-ref>
 			</interceptor-stack>
 		</interceptors>
@@ -89,7 +92,7 @@
 			</result>
 		</action>
 		
-		<!-- 处理权限组的action -->
+		<!-- 处理权限组 -->
 		<action name="sysRoleAction_*" class="cn.gaily.crm.web.action.SysRoleAction" method="{1}">
 			<result name="{1}">/WEB-INF/page/sys/role/{1}.jsp</result>	
 			<result name="listAction" type="redirectAction">
@@ -103,7 +106,6 @@
 				<param name="actionName">sysRoleAction_listPopedom</param>
 				<param name="nameSpace">/sys</param>
 			</result>
-			
 			<!-- 处理菜单权限 -->
 			<result name="listMenu">/WEB-INF/page/sys/role/menu/view.jsp</result>
 			<result name="updateMenu" type="chain">
@@ -111,7 +113,6 @@
 				<param name="nameSpace">/sys</param>
 			</result>
 		</action>
-		
 		<!-- 处理人事的action -->
 		<action name="sysUserAction_*" class="cn.gaily.crm.web.action.SysUserAction" method="{1}">
 			<result name="main">/WEB-INF/page/menu/main.jsp</result>
@@ -123,7 +124,13 @@
 			</result>
 		</action>
 		
+		<action name="provinceAction_*" class="cn.gaily.crm.web.action.ProvinceAction" method="{1}">
+			<result name="{1}">/WEB-INF/page/sys/province/{1}.jsp</result>
+		</action>
 		
+		<action name="cityAction_*" class="cn.gaily.crm.web.action.CityAction" method="{1}">
+			<result name="{1}">/WEB-INF/page/sys/city/{1}.jsp</result>
+		</action>
 	</package>
 </struts>
 

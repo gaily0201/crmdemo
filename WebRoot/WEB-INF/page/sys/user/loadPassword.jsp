@@ -25,7 +25,7 @@ function do_update(){
 	var action = "${pageContext.request.contextPath}/sys/sysUserAction_updatePassword.do?";
 	var id="${param.id}";
 	var paramStr = action+"&id="+id+"&password="+psw;
-
+	
     $.post(paramStr,function(data,textStatus,xmlHttp){         
     	//document.getElementById("msg").innerHTML = "<font color='red'>"+data+"</font>";
     	$("#msg").empty();   //删除   请修改密码
@@ -40,6 +40,7 @@ function do_update(){
 </head>
 
 <body>
+<s:hidden name="id" value="%{#sysUser.id}"/>
 <button type='button' class='button' onMouseOver="this.className='button_over';" onMouseOut="this.className='button';"  
     onClick="do_update();">
     <img src="${pageContext.request.contextPath}/ui/images/button/baocun.png" border='0' 
@@ -58,10 +59,9 @@ function do_update(){
 		<table width="100%" border="0" cellspacing="0" cellpadding="0">
 		  <tr>
 			<td width="18%" height="19" class="tabDetailViewDL">用 户 名：</td>
-			<td width="29%" class="tabDetailViewDF"><s:property value="#parameters.name[0]"/>&nbsp;</td>
+			<td width="29%" class="tabDetailViewDF">${sysUser.name}&nbsp;</td>
 			<td width="17%" class="tabDetailViewDL">中 文 名：</td>
-			<td width="36%" class="tabDetailViewDF">
-				<s:property value="#parameters.cnname[0]"/>&nbsp;</td>
+			<td width="36%" class="tabDetailViewDF">${sysUser.cnname}&nbsp;</td>
 		  </tr>
 		  <tr>
 			<td class="tabDetailViewDL">新 密 码：</td>
@@ -70,6 +70,9 @@ function do_update(){
 		<tr>
 			<td class="tabDetailViewDL">重复新密码：</td>
 			<td class="tabDetailViewDF" colspan="3"><s:password id="password1" name="password1"/></td>
+		  </tr>
+		  <tr>
+		  	<td><s:fielderror fieldName="result"/></td>
 		  </tr>
 		</table>
 		</div>

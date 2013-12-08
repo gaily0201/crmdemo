@@ -157,9 +157,30 @@ public class SysUserServiceImpl implements SysUserService {
 	}
 
 	@Override
+	@Transactional(readOnly = true)
 	public List<SysUser> findAllSysUsers() {
 		LinkedHashMap<String, String> orderby =  new LinkedHashMap<String, String>();
 		orderby.put("o.id", "asc");
 		return sysUserDao.findObjectsByConditionWithNoPage(orderby);
+	}
+
+	@Override
+	@Transactional(readOnly = false)
+	public void updateSysUsersPassword(SysUser curSysuser, SysUser sysUser) {
+		// TODO Auto-generated method stub
+		if(sysUser!=null&&curSysuser!=null){
+			sysUserDao.update(sysUser);
+			
+			//处理日志
+			SysOperateLog log = new SysOperateLog();
+			log.setUserName(curSysuser.getName());
+			log.setCnname(curSysuser.getCnname());
+			log.setActionType("修改密码");
+			String actionContent ="修改用户["+sysUser.getCnname()+"]的密码";
+			log.setActionContent(actionContent);
+			log.setActionDate(DateFormatUtils.format(new java.util.Date(),
+					"yyyy-MM-dd HH:mm:ss"));
+			sysOperateLogDao.save(log);
+		}
 	}
 }

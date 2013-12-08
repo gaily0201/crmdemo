@@ -61,9 +61,9 @@
 </div>
 <div class="link_title">
 <br>&nbsp;&nbsp;
-	<a href="${pageContext.request.contextPath}/crm/customer/base/list.jsp">今天需要联系的客户</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	<a href="${pageContext.request.contextPath}/crm/customer/base/list.jsp">已过期未联系的客户</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	<a href="${pageContext.request.contextPath}/crm/customer/base/list.jsp">全部</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	<a href="${pageContext.request.contextPath}/crm/companyAction_todayNeedsLink.do">今天需要联系的客户</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	<a href="${pageContext.request.contextPath}/crm/companyAction_datePassedLink.do">已过期未联系的客户</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	<a href="${pageContext.request.contextPath}/crm/companyAction_list.do">全部</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
 </div>
 <br>

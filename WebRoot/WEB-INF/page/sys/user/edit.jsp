@@ -17,7 +17,11 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/ui/js/date_input/jquery.datepick.css" type="text/css">
 <!--处理日期结束  -->
 </head>
-
+<script language="javascript">
+	function loadPassword(id,name,cnname) {
+		OpenWin('${pageContext.request.contextPath}/sys/sysUserAction_loadPassword.do?id='+ id, '', 500, 200);
+	}
+</script>
 <body>
 <s:form name="form1" method="post" action="sysUserAction_update.do"  namespace="/sys">
 <s:hidden  name="id"/>
@@ -35,20 +39,16 @@
        <s:param name="cnname" value="cnname"></s:param>
    </s:url>
    
-   
 	<button type='button' class='button' onMouseOver="this.className='button_over';" onMouseOut="this.className='button';"  
 	        onClick="document.forms[0].submit();">
 	        <img src="${pageContext.request.contextPath}/ui/images/button/baocun.png" border='0' 
 	        align='absmiddle'>&nbsp;保存</button>
-	<!--<button type='button' class='button' onMouseOver="this.className='button_over';" onMouseOut="this.className='button';"  
-	        onClick="OpenDiv('<s:property value="#url"/>')">
+	<button type='button' class='button' onMouseOver="this.className='button_over';" onMouseOut="this.className='button';"  
+	        onClick="loadPassword(${sysUser.id})">
 	        <img src="${pageContext.request.contextPath}/ui/images/button/xgmm.png" border='0' 
 	        align='absmiddle'>&nbsp;修改密码</button>
-	 <button type='button' class='button' onMouseOver="this.className='button_over';" onMouseOut="this.className='button';"  
-	        onClick="OpenWin('/sys/user/user.do?method=print&id=12')">
-	        <img src="${pageContext.request.contextPath}/ui/images/button/dayin.png" border='0' 
-	        align='absmiddle'>&nbsp;打印</button>
-	 -->
+	 
+	 
 	<button type='button' class='button' onMouseOver="this.className='button_over';" onMouseOut="this.className='button';"  
 	       onClick="window.history.go(-1)">
 	       <img src="${pageContext.request.contextPath}/ui/images/button/fanhui.png" border='0' 
@@ -323,8 +323,8 @@
 		<font color='#FFFFFF'>&nbsp;修改密码</font>
 		</th>
 		<td align='right' onselectstart="return false">	
-			<a href='#' onClick="close_window();">
-			<img src="${pageContext.request.contextPath}/ui/images/xpclose.jpg" width="20" height="20" border="0" onClick="" align="absmiddle"></a>
+			<a href='#' onClick="close_window()"/>
+			<img src="${pageContext.request.contextPath}/ui/images/xpclose.jpg" width="20" height="20" border="0" align="absmiddle"></a>
 		</td>
 	</tr>
 	<tr>

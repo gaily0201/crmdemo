@@ -40,6 +40,47 @@ public class SysUserAction extends BaseAction implements
 			.getService("sysRoleService");
 
 	/**
+	 * 更新密码
+	 * @return
+	 */
+	@Limit(module="user",privilege="updatePassword")
+	public String updatePassword(){
+		String sid = request.getParameter("id");
+		String newPassword = request.getParameter("password");
+		SysUser curSysuser = SessionUtils.getSysUserFromSession(request);
+		if(StringUtils.isNotBlank(sid)&&StringUtils.isNotBlank(newPassword)&&curSysuser!=null){
+			Integer id = Integer.parseInt(sid);
+			SysUser sysUser = sysUserService.findSysUserById(id);
+			if(sysUser!=null){
+				MD5keyBean md5 = new MD5keyBean();
+				String password = md5.getkeyBeanofStr(newPassword);
+				sysUser.setPassword(password);
+				sysUserService.updateSysUsersPassword(curSysuser,sysUser);
+				return "updatePassword";
+			}
+		}
+		return null;
+	}
+	
+	/**
+	 * 显示修改密码界面
+	 * @return
+	 */
+	@Limit(module="user",privilege="loadPassword")
+	public String loadPassword(){
+		String sid = request.getParameter("id");
+		if(StringUtils.isNotBlank(sid)){
+			Integer id = Integer.parseInt(sid);
+			SysUser sysUser = sysUserService.findSysUserById(id);
+			if(sysUser!=null){
+				request.setAttribute("sysUser", sysUser);
+				return "loadPassword";
+			}
+		}
+		return null;
+	}
+	
+	/**
 	 * 更新
 	 * 
 	 * @return
@@ -125,7 +166,7 @@ public class SysUserAction extends BaseAction implements
 				sysUserForm.setGroupId(sysUser.getSysUserGroup().getId()
 						.toString());
 			}
-
+			request.setAttribute("sysUser", sysUser);
 			return "edit";
 		}
 		return null;

@@ -33,6 +33,7 @@
 <!-- ////////////////////////////////////////处理客户////////////////////////////////////////////// -->
 		<action name="companyAction_*" class="cn.gaily.crm.web.action.CompanyAction" method="{1}">
 			<result name="{1}">/WEB-INF/page/crm/customer/base/{1}.jsp</result>
+			<result name="list">/WEB-INF/page/crm/customer/base/list.jsp</result>
 			<result name="listAction" type="redirectAction">
 				<param name="actionName">companyAction_list</param>
 				<param name="nameSpace">/crm</param>
@@ -132,6 +133,10 @@
 			<result name="{1}">/WEB-INF/page/sys/user/{1}.jsp</result>	
 			<result name="listAction" type="redirectAction">
 				<param name="actionName">sysUserAction_list.do</param>
+				<param name="nameSpace">/sys</param>
+			</result>
+			<result name="updatePassword" type="redirectAction">
+				<param name="actionName">sysUserAction_loadPassword.do</param>
 				<param name="nameSpace">/sys</param>
 			</result>
 		</action>

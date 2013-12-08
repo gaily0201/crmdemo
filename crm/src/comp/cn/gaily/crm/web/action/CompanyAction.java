@@ -2,6 +2,7 @@ package cn.gaily.crm.web.action;
 
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -13,6 +14,7 @@ import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.beanutils.ConvertUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.time.DateFormatUtils;
+import org.apache.commons.lang.time.DateUtils;
 import org.apache.struts2.components.If;
 
 import com.opensymphony.xwork2.ModelDriven;
@@ -70,6 +72,78 @@ public class CompanyAction extends BaseAction implements
 	SysUserService sysUserService = (SysUserService) ServiceProvinder
 			.getService("sysUserService");
 
+	/**
+	 * 已过期未联系的客户
+	 * @return
+	 * @throws IllegalAccessException
+	 * @throws InvocationTargetException
+	 * @throws ParseException 
+	 */
+	public String datePassedLink() throws IllegalAccessException, InvocationTargetException, ParseException{
+		
+		CompanySearch companySearch = new CompanySearch();
+		BeanUtils.copyProperties(companySearch, companyForm);
+		SysUser curSysuser = SessionUtils.getSysUserFromSession(request);
+		if (curSysuser != null) {
+			List<Company> allcompanyList = companyService.findCompanyByCondition(curSysuser, companySearch);
+			// 查询共享的客户
+			List<Company> sharedList = companyService.findSharedCompany(curSysuser);
+			if (sharedList != null && sharedList.size() > 0) {
+				allcompanyList.addAll(sharedList);
+			}
+			
+			List<Company> companyList = new ArrayList<Company>();
+			
+			//所有的客户保存在companyList中,出去不是今天需要联系的
+			for(int i=0;i<allcompanyList.size();i++){
+				Company company = allcompanyList.get(i);
+				java.sql.Date nextTouchDate = company.getNextTouchDate();
+				if (0>nextTouchDate.compareTo(DateUtils.parseDateStrictly(DateFormatUtils.format(new Date(), "yyyy-MM-dd"), new String[]{"yyyy-MM-dd"}))) {
+					//已过期未联系客户
+					companyList.add(company);
+				}
+			}
+			request.setAttribute("companyList", companyList);
+			return "list";
+		}
+		return null;
+	}
+	
+	/**
+	 * 今日需要联系的客户
+	 * @return
+	 * @throws InvocationTargetException 
+	 * @throws IllegalAccessException 
+	 */
+	public String todayNeedsLink() throws IllegalAccessException, InvocationTargetException{
+		
+		CompanySearch companySearch = new CompanySearch();
+		BeanUtils.copyProperties(companySearch, companyForm);
+		SysUser curSysuser = SessionUtils.getSysUserFromSession(request);
+		if (curSysuser != null) {
+			List<Company> allcompanyList = companyService.findCompanyByCondition(curSysuser, companySearch);
+			// 查询共享的客户
+			List<Company> sharedList = companyService.findSharedCompany(curSysuser);
+			if (sharedList != null && sharedList.size() > 0) {
+				allcompanyList.addAll(sharedList);
+			}
+			
+			List<Company> companyList = new ArrayList<Company>();
+			
+			//所有的客户保存在companyList中,出去不是今天需要联系的
+			for(int i=0;i<allcompanyList.size();i++){
+				Company company = allcompanyList.get(i);
+				java.sql.Date nextTouchDate = company.getNextTouchDate();
+				if(nextTouchDate.toString().equals(DateFormatUtils.format(new Date(), "yyyy-MM-dd"))){
+					companyList.add(company);
+				}
+			}
+			request.setAttribute("companyList", companyList);
+			return "list";
+		}
+		return null;
+	}
+	
 	/**
 	 * 经手人变更
 	 * 

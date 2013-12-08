@@ -73,4 +73,12 @@ public interface SysUserService {
 	 */
 	List<SysUser> findAllSysUsers();
 
+
+	/**
+	 * 更改用户的密码
+	 * @param curSysuser
+	 * @param sysUser
+	 */
+	void updateSysUsersPassword(SysUser curSysuser, SysUser sysUser);
+
 }

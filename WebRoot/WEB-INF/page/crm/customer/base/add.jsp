@@ -237,6 +237,7 @@
 						<option value='电子/电器/半导体/仪器仪表'>电子/电器/半导体/仪器仪表</option>
 						<option value='计算机软件'>计算机软件</option>
 						<option value='计算机硬件'>计算机硬件</option>
+						<option value='其它'>其它</option>
 	            </select>
           </td>
 			<td width="16%">企业性质：</td>

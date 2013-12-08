@@ -49,7 +49,7 @@ public interface CompanyService {
 	 * 根据ids删除客户
 	 * @param ids
 	 */
-	void deleteCompanyByIds(Integer[] ids);
+	void deleteCompanyByIds(SysUser curSysuser,Integer[] ids);
 
 	/**
 	 * 增加共享
@@ -57,7 +57,7 @@ public interface CompanyService {
 	 * @param id 客户id
 	 * @param uids 用户id
 	 */
-	void addUpdateShareSetOne(String s_module, Integer id, Integer[] uids);
+	void addUpdateShareSetOne(SysUser curSysuser,String s_module, Integer id, Integer[] uids);
 	
 	/**
 	 * 减少共享
@@ -65,14 +65,14 @@ public interface CompanyService {
 	 * @param id 客户id
 	 * @param uids 用户id
 	 */
-	void minusUpdateShareSetOne(String s_module, Integer id, Integer[] uids);
+	void minusUpdateShareSetOne(SysUser curSysuser,String s_module, Integer id, Integer[] uids);
 
 	/**
 	 * 取消共享设置
 	 * @param id 客户id
 	 * @param s_module 模块名称
 	 */
-	void updateShareCancelOne(Integer id, String s_module);
+	void updateShareCancelOne(SysUser curSysuser,Integer id, String s_module);
 
 	/**
 	 * 根据共享的Id查找用户信息
@@ -87,6 +87,20 @@ public interface CompanyService {
 	 * @return
 	 */
 	List<Company> findSharedCompany(SysUser curSysuser);
+
+	/**
+	 * 设置下次联系时间
+	 * @param ids 客户id
+	 * @param next_touch_date 下次联系时间
+	 */
+	void updateNextTouchTime(SysUser curSysuser, Integer[] ids, java.sql.Date next_touch_date);
+
+	/**
+	 * 变更客户的所有人
+	 * @param id
+	 * @param new_owner
+	 */
+	void changeHandler(SysUser curSysuser,Integer[] id, Integer new_owner);
 
 
 }

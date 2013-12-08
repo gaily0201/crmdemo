@@ -17,7 +17,8 @@
 <script>
 function Date_of_Today(){ 
     var now=new Date();
-    var year=now.getYear();
+    var year=now.getFullYear();
+    //alert(year);
     var mm=now.getMonth()+1;
     var dd=now.getDate();
     if(mm<10) mm="0"+mm;
@@ -34,7 +35,8 @@ function check(){
        return false;
     }
     var curDate=Date_of_Today();
-
+   // alert("设置的时间:"+next_touch_date);
+	//alert("当前时间:"+curDate);
     if(next_touch_date<curDate){
        alert("下次联系时间必须大于系统的当前时间");
        $("#next_touch_date").focus();
@@ -46,7 +48,7 @@ function check(){
 </head>
 
 <body>
-<s:form name="form1" method="post" action="companyAction_nextTouchTime.do" namespace="/crm"  onsubmit="check();">
+<s:form name="form1" method="post" action="companyAction_updateNextTouchTime.do" namespace="/crm">
 <s:hidden name="ids" value="%{#parameters.ids[0]}"/>
 <div class="mtitle">
 	<div class="mtitle-row">&nbsp;</div>
@@ -54,7 +56,7 @@ function check(){
 </div>
 <br/>
 <div class="control">
-	<button type='button' class='button' onMouseOver="this.className='button_over';" 
+	<button type='button' class='button' onmousedown="check()" onMouseOver="this.className='button_over';" 
             onMouseOut="this.className='button';"  onClick="document.forms[0].submit();">
             <img  src="${pageContext.request.contextPath}/ui/images/button/baocun.png" border='0' 
                   align='absmiddlce'>&nbsp;保存</button>

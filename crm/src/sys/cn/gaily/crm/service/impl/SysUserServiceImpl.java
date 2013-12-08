@@ -1,17 +1,21 @@
 package cn.gaily.crm.service.impl;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
 
 import javax.annotation.Resource;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang.time.DateFormatUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import cn.gaily.crm.bean.SysUserSearch;
+import cn.gaily.crm.dao.SysOperateLogDao;
 import cn.gaily.crm.dao.SysUserDao;
+import cn.gaily.crm.domain.SysOperateLog;
 import cn.gaily.crm.domain.SysUser;
 import cn.gaily.crm.service.SysUserService;
 
@@ -21,9 +25,12 @@ public class SysUserServiceImpl implements SysUserService {
 
 	@Resource(name = "sysUserDao")
 	private SysUserDao sysUserDao;
-
+	
+	@Resource(name = "sysOperateLogDao")
+	private SysOperateLogDao sysOperateLogDao;
+	
 	@Override
-	@Transactional(readOnly = true)
+	@Transactional(readOnly = false)
 	public SysUser findSysUserByNameAndPassword(String name, String password) {
 
 		if (StringUtils.isNotBlank(name) && StringUtils.isNotBlank(password)) {
@@ -34,7 +41,21 @@ public class SysUserServiceImpl implements SysUserService {
 			List<SysUser> list = sysUserDao.findObjectsByConditionWithNoPage(
 					whereHql, params);
 			if (list != null && list.size() == 1) {
+				SysUser curSysuser = list.get(0);
+				//处理日志
+				SysOperateLog log = new SysOperateLog();
+				log.setUserName(curSysuser.getName());
+				log.setCnname(curSysuser.getCnname());
+				log.setActionType("登录系统");
+				String actionContent =curSysuser.getCnname()+"于 "+
+						DateFormatUtils.format(new Date(), "yyyy-MM-dd HH:mm:ss")+" 登录系统";
+				log.setActionContent(actionContent);
+				log.setActionDate(DateFormatUtils.format(new java.util.Date(),
+						"yyyy-MM-dd HH:mm:ss"));
+				sysOperateLogDao.save(log);
+				
 				return list.get(0);
+				
 			}
 		}
 		return null;

@@ -49,6 +49,18 @@
 				<param name="actionName">companyAction_showShareCancelOne</param>
 				<param name="nameSpace">/crm</param>
 			</result>
+			<!-- 设置下次联系时间 -->
+			<result name="showNextTouchTime">/WEB-INF/page/crm/customer/base/nextTouchTime.jsp</result>
+			<result name="nextTouchTime" type="chain">
+				<param name="actionName">companyAction_showNextTouchTime</param>
+				<param name="nameSpace">/crm</param>
+			</result>
+			<!-- 经手人变更 -->
+			<result name="showChangePerson">/WEB-INF/page/crm/customer/base/changePerson.jsp</result>
+			<result name="changeHandler" type="chain">
+				<param name="actionName">companyAction_showChangePerson</param>
+				<param name="nameSpace">/crm</param>
+			</result>
 		</action>
 <!-- //////////////////////////////////////////处理联系人////////////////////////////////////////////// -->
 		<action name="linkmanAction_*" class="cn.gaily.crm.web.action.LinkmanAction" method="{1}">

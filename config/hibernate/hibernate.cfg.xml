@@ -27,6 +27,7 @@
 		<mapping resource="cn/gaily/crm/domain/City.hbm.xml" />
 		<mapping resource="cn/gaily/crm/domain/Province.hbm.xml" />
 		<mapping resource="cn/gaily/crm/domain/Linkman.hbm.xml" />
+		<mapping resource="cn/gaily/crm/domain/SysOperateLog.hbm.xml" />
 
 	</session-factory>
 </hibernate-configuration>

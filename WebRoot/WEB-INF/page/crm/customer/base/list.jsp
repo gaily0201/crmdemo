@@ -246,7 +246,7 @@
 	       alert("必须有一个客户被选中!!!");
 	       return false;
 	 }
-	 OpenWin("${pageContext.request.contextPath}/crm/customer/base/nextTouchTime.jsp?ids="+ids,'',420,300);
+	 OpenWin("${pageContext.request.contextPath}/crm/companyAction_showNextTouchTime.do?ids="+ids,'',420,300);
 	}
 
 	

@@ -13,6 +13,7 @@ import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.beanutils.ConvertUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.time.DateFormatUtils;
+import org.apache.struts2.components.If;
 
 import com.opensymphony.xwork2.ModelDriven;
 
@@ -69,9 +70,77 @@ public class CompanyAction extends BaseAction implements
 	SysUserService sysUserService = (SysUserService) ServiceProvinder
 			.getService("sysUserService");
 
-	
-	
-	
+	/**
+	 * 经手人变更
+	 * 
+	 * @return
+	 */
+	public String changeHandler() {
+		// 获取客户ids
+		String sids = request.getParameter("ids");
+		// 获取当前的登录用户
+		SysUser curSysuser = SessionUtils.getSysUserFromSession(request);
+		if (StringUtils.isNotBlank(sids)&&curSysuser!=null) {
+			// 获取新的所有者
+			String[] ids = sids.split(",");
+			Integer[] id = DataType.converterStringArray2IntegerArray(ids);
+
+			String snew_owner = request.getParameter("new_owner");
+			if (StringUtils.isNotBlank(snew_owner)) {
+				Integer new_owner = Integer.parseInt(snew_owner.trim());
+				companyService.changeHandler(curSysuser,id, new_owner);
+				return "changeHandler";
+			}
+		}
+		return null;
+	}
+
+	/**
+	 * 显示经手人 变更页面
+	 * 
+	 * @return
+	 */
+	public String showChangePerson() {
+		// 获取系统中所有的用户
+		List<SysUser> sysUserSelect = sysUserService.findAllSysUsers();
+		request.setAttribute("sysUserSelect", sysUserSelect);
+		return "showChangePerson";
+	}
+
+	/**
+	 * 变更下次联系时间
+	 * 
+	 * @return
+	 */
+	public String updateNextTouchTime() {
+		// 获取客户Id
+		String ssids = request.getParameter("ids");
+		// 获取当前的登录用户
+		SysUser curSysuser = SessionUtils.getSysUserFromSession(request);
+		if (StringUtils.isNotBlank(ssids)&&curSysuser!=null) {
+			String[] sids = ssids.split(",");
+			Integer[] ids = DataType.converterStringArray2IntegerArray(sids);
+
+			// 获取下次联系时间
+			String snext_touch_date = request.getParameter("next_touch_date");
+			java.sql.Date next_touch_date = java.sql.Date
+					.valueOf(snext_touch_date);
+
+			companyService.updateNextTouchTime(curSysuser, ids, next_touch_date);
+			return "nextTouchTime";
+		}
+		return null;
+	}
+
+	/**
+	 * 显示设置下次联系时间界面
+	 * 
+	 * @return
+	 */
+	public String showNextTouchTime() {
+		return "showNextTouchTime";
+	}
+
 	/**
 	 * 查看共享
 	 * 
@@ -84,11 +153,11 @@ public class CompanyAction extends BaseAction implements
 			Integer id = Integer.parseInt(sid);
 			Company company = companyService.findCompanyById(id);
 			request.setAttribute("company", company);
-			
-			//获取该用户共享的用户信息
+
+			// 获取该用户共享的用户信息
 			List<SysUser> sysUsers = companyService.findSysUserBySharedIds(id);
 			request.setAttribute("sysUsers", sysUsers);
-			
+
 			return "showShareViewOne";
 		}
 		return null;
@@ -101,12 +170,14 @@ public class CompanyAction extends BaseAction implements
 	 */
 	public String updateshareCancelOne() {
 		String sid = request.getParameter("id");
-		if (StringUtils.isNotBlank(sid)) {
+		// 获取当前的登录用户
+		SysUser curSysuser = SessionUtils.getSysUserFromSession(request);
+		if (StringUtils.isNotBlank(sid)&&curSysuser!=null) {
 			Integer id = Integer.parseInt(sid);
 			// 获取模块名称
 			String s_module = request.getParameter("s_module");
 			if (StringUtils.isNotBlank(s_module)) {
-				companyService.updateShareCancelOne(id, s_module);
+				companyService.updateShareCancelOne(curSysuser,id, s_module);
 				return "updateshareCancelOne";
 			}
 		}
@@ -152,13 +223,15 @@ public class CompanyAction extends BaseAction implements
 
 					String sharetype = request.getParameter("sharetype");
 					if (StringUtils.isNotBlank(sharetype)) {
-						if ("add".equals(sharetype)) { // 增加共享
-							companyService.addUpdateShareSetOne(s_module, id,
-									uids);
-						}
-						if ("minus".equals(sharetype)) { // 减少共享
-							companyService.minusUpdateShareSetOne(s_module, id,
-									uids);
+						// 获取当前的登录用户
+						SysUser curSysuser = SessionUtils.getSysUserFromSession(request);
+						if (curSysuser != null) {
+							if ("add".equals(sharetype)) { // 增加共享
+								companyService.addUpdateShareSetOne(curSysuser, s_module, id, uids);
+							}
+							if ("minus".equals(sharetype)) { // 减少共享
+								companyService.minusUpdateShareSetOne(curSysuser, s_module, id, uids);
+							}
 						}
 					}
 					return "updateShareSetOne";
@@ -204,8 +277,12 @@ public class CompanyAction extends BaseAction implements
 		String[] sids = request.getParameterValues("ids");
 		if (sids != null && sids.length > 0) {
 			Integer[] ids = DataType.converterStringArray2IntegerArray(sids);
-			companyService.deleteCompanyByIds(ids);
-			return "listAction";
+			// 获取当前的登录用户
+			SysUser curSysuser = SessionUtils.getSysUserFromSession(request);
+			if (curSysuser != null) {
+				companyService.deleteCompanyByIds(curSysuser,ids);
+				return "listAction";
+			}
 		}
 		return null;
 	}
@@ -355,10 +432,14 @@ public class CompanyAction extends BaseAction implements
 
 		SysUser curSysuser = SessionUtils.getSysUserFromSession(request);
 		if (curSysuser != null) {
-			List<Company> companyList = companyService.findCompanyByCondition(curSysuser, companySearch);
-			//查询共享的客户
-			List<Company> sharedList = companyService.findSharedCompany(curSysuser);
-			companyList.addAll(sharedList);
+			List<Company> companyList = companyService.findCompanyByCondition(
+					curSysuser, companySearch);
+			// 查询共享的客户
+			List<Company> sharedList = companyService
+					.findSharedCompany(curSysuser);
+			if (sharedList != null && sharedList.size() > 0) {
+				companyList.addAll(sharedList);
+			}
 			request.setAttribute("companyList", companyList);
 			return "list";
 		}

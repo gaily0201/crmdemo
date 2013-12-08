@@ -12,4 +12,10 @@ public interface SysMenuService {
 	 */
 	List<SysMenu> findAllSysMenus();
 
+	/**
+	 * 查询所有的菜单，带缓存
+	 * @return
+	 */
+	List<SysMenu> findAllSysMenusCache();
+
 }

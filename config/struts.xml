@@ -11,6 +11,11 @@
 	<!-- 配置struts2的模式ewing开发模式 -->
 	<constant name="struts.devMode" value="true"/>
 	
+	<package name="report" namespace="/report" extends="struts-default">
+		<action name="reportAction_*" class="cn.gaily.crm.web.action.ReportAction" method="{1}">
+			<result name="{1}">/WEB-INF/page/report/khflfxReport.jsp</result>
+		</action>	
+	</package>
 	
 	<package name="crm" namespace="/crm" extends="struts-default">
 		<!-- 配置权限拦截器 -->
@@ -23,7 +28,7 @@
 			</interceptor-stack>
 		</interceptors>
 		<!-- 权限检测，项目完成后放开 -->
-	<!-- 	<default-interceptor-ref name="limitStack"/> -->
+		<default-interceptor-ref name="limitStack"/> 
 		<!-- 转发到没有权限的页面 -->
 		<global-results>
 			<result name="popmsg_popedom">/WEB-INF/page/popmsg_popedom.jsp</result>
@@ -85,7 +90,7 @@
 			</interceptor-stack>
 		</interceptors>
 		<!-- 权限检测，项目完成后放开 -->
-	<!-- 	<default-interceptor-ref name="limitStack"/> -->
+		<default-interceptor-ref name="limitStack"/>
 		<!-- 转发到没有权限的页面 -->
 		<global-results>
 			<result name="popmsg_popedom">/WEB-INF/page/popmsg_popedom.jsp</result>

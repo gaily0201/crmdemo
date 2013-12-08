@@ -160,7 +160,6 @@
     </tr>
 	
 </table>
- <%@ include file="/include/page.jsp" %>
 </div>
 </body>
 </html>

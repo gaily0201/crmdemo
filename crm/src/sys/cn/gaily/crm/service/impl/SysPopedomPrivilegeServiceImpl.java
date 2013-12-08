@@ -56,7 +56,7 @@ public class SysPopedomPrivilegeServiceImpl extends
 	}
 
 	@Override
-	@Transactional(readOnly = true)
+	@Transactional(readOnly = false)
 	public List<SysPopedomPrivilege> findSysPopedomPrivilegesByRoleId(String roleId) {
 		// 删除该权限组对应的权限
 		if (StringUtils.isNotBlank(roleId)) {
@@ -70,9 +70,18 @@ public class SysPopedomPrivilegeServiceImpl extends
 	}
 
 	@Override
+	@Transactional(readOnly = true)
 	public List<SysPopedomPrivilege> findSysPopedomPrivileges() {
 		LinkedHashMap<String, String> orderby  = new LinkedHashMap<String, String>();
 		orderby.put("o.id.roleId", "asc");
 		return sysPopedomPrivilegeDao.findObjectsByConditionWithNoPage(orderby);
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public List<SysPopedomPrivilege> findSysPopedomPrivilegesCache() {
+		LinkedHashMap<String, String> orderby  = new LinkedHashMap<String, String>();
+		orderby.put("o.id.roleId", "asc");
+		return sysPopedomPrivilegeDao.findObjectsByConditionWithNoPageCache(null,null,orderby);
 	}
 }

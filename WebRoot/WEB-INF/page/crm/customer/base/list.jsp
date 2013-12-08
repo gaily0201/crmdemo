@@ -45,7 +45,7 @@
 		
 		if(count==1){  //选中一个客户的情况下
 		   //alert("${pageContext.request.contextPath}/crm/companyAction_other.do?method=showshareSetOne&id="+ids);
-		   OpenWin("${pageContext.request.contextPath}/crm//companyAction_showShareSetOne.do?id="+ids,'',500,400)
+		   OpenWin("${pageContext.request.contextPath}/crm//companyAction_showShareSetOne.do?id="+ids,'',500,400);
 		   //OpenWin("${pageContext.request.contextPath}/crm/customer/base/shareSetOne.jsp",'',500,400);
 		}else{  //选中多个的情况下
 			 //OpenWin("${pageContext.request.contextPath}/crm/customer/base/shareSetMany.jsp",'',500,400);

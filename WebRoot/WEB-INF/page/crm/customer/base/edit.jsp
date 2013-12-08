@@ -41,6 +41,35 @@
 	             }
 	        });
 		}
+function Date_of_Today(){ 
+    var now=new Date();
+    var year=now.getFullYear();
+    //alert(year);
+    var mm=now.getMonth()+1;
+    var dd=now.getDate();
+    if(mm<10) mm="0"+mm;
+    if(dd<10) dd="0"+dd;
+    
+    return year+"-"+mm+"-"+dd;
+}
+
+function check(){
+	var next_touch_date=$("#nextTouchDate").val();
+    if($.trim(next_touch_date)==""){
+       alert("下次联系时间不能为空");
+       $("#nextTouchDate").focus();
+       return false;
+    }
+    var curDate=Date_of_Today();
+   // alert("设置的时间:"+next_touch_date);
+	//alert("当前时间:"+curDate);
+    if(next_touch_date<curDate){
+       alert("下次联系时间必须大于系统的当前时间");
+       $("#nextTouchDate").focus();
+    }
+
+   return true;
+}
 </script>
 </head>
 <body>
@@ -52,11 +81,8 @@
      <br>
 	<div class="control">
 		<button type='button' class='button' onMouseOver="this.className='button_over';" onMouseOut="this.className='button';"  
-		        onClick="document.forms[0].submit();">
+		        onClick="document.forms[0].submit();" onmousedown="check()">
 		        <img src="${pageContext.request.contextPath}/ui/images/button/baocun.png" border='0' align='absmiddle'>&nbsp;保存</button>
-		<button type='button' class='button' onMouseOver="this.className='button_over';" onMouseOut="this.className='button';"  onClick="goChangePerson2()"><img src="${pageContext.request.contextPath}/ui/images/button/jinshourbg.png" border='0' align='absmiddle'>&nbsp;经手人变更</button>
-		<button type='button' class='button' onMouseOver="this.className='button_over';" onMouseOut="this.className='button';"  onClick="OpenWin('/common/share/ShareSet.jsp?pid=7&owner_usr=1&c_name=777&m_type=customer','',500,400)"><img src="${pageContext.request.contextPath}/ui/images/button/gongxiang.png" border='0' align='absmiddle'>&nbsp;共享</button>
-		<button type='button' class='button' onMouseOver="this.className='button_over';" onMouseOut="this.className='button';"  onClick="OpenWin('/crm/customer/customer.do?method=print&id=7')"><img src="${pageContext.request.contextPath}/ui/images/button/dayin.png" border='0' align='absmiddle'>&nbsp;打印</button>
 		<button type='button' class='button' onMouseOver="this.className='button_over';" onMouseOut="this.className='button';"  onClick="window.history.go(-1)"><img src="${pageContext.request.contextPath}/ui/images/button/fanhui.png" border='0' align='absmiddle'>&nbsp;返回</button>
 	</div>
 <table width="100%" border="0" cellspacing="0" class="tabForm">
@@ -240,6 +266,7 @@
 						<option value='电子/电器/半导体/仪器仪表'>电子/电器/半导体/仪器仪表</option>
 						<option value='计算机软件'>计算机软件</option>
 						<option value='计算机硬件'>计算机硬件</option>
+						<option value='其它'>其它</option>
 	            </select>
           </td>
 			<td width="16%">企业性质：</td>

@@ -26,4 +26,10 @@ public interface SysPopedomPrivilegeService {
 	 */
 	List<SysPopedomPrivilege> findSysPopedomPrivileges();
 
+	/**
+	 * 查询所有的操作权限组的数据,启用二级缓存
+	 * @return
+	 */
+	List<SysPopedomPrivilege> findSysPopedomPrivilegesCache();
+
 }

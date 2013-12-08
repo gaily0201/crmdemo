@@ -145,7 +145,6 @@ function forward(strURL){
 	
 </table>
 </form>
- <%@ include file="/include/page.jsp" %>
 </div>
 </body>
 </html>

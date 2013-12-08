@@ -79,6 +79,7 @@ public class CompanyAction extends BaseAction implements
 	 * @throws InvocationTargetException
 	 * @throws ParseException 
 	 */
+	@Limit(module = "company", privilege = "datePassedLink")
 	public String datePassedLink() throws IllegalAccessException, InvocationTargetException, ParseException{
 		
 		CompanySearch companySearch = new CompanySearch();
@@ -97,10 +98,16 @@ public class CompanyAction extends BaseAction implements
 			//所有的客户保存在companyList中,出去不是今天需要联系的
 			for(int i=0;i<allcompanyList.size();i++){
 				Company company = allcompanyList.get(i);
-				java.sql.Date nextTouchDate = company.getNextTouchDate();
-				if (0>nextTouchDate.compareTo(DateUtils.parseDateStrictly(DateFormatUtils.format(new Date(), "yyyy-MM-dd"), new String[]{"yyyy-MM-dd"}))) {
-					//已过期未联系客户
+				if(company.getNextTouchDate()==null){
 					companyList.add(company);
+				}
+				if(company.getNextTouchDate()!=null){
+					java.sql.Date nextTouchDate = company.getNextTouchDate();
+					if (0>nextTouchDate.compareTo(DateUtils.parseDateStrictly(DateFormatUtils.format(new Date(), "yyyy-MM-dd"), new String[]{"yyyy-MM-dd"}))) {
+						//已过期未联系客户
+						companyList.add(company);
+						request.setAttribute("outofdateCompanyNum", companyList.size());
+					}
 				}
 			}
 			request.setAttribute("companyList", companyList);
@@ -115,6 +122,7 @@ public class CompanyAction extends BaseAction implements
 	 * @throws InvocationTargetException 
 	 * @throws IllegalAccessException 
 	 */
+	@Limit(module = "company", privilege = "todayNeedsLink")
 	public String todayNeedsLink() throws IllegalAccessException, InvocationTargetException{
 		
 		CompanySearch companySearch = new CompanySearch();
@@ -133,9 +141,13 @@ public class CompanyAction extends BaseAction implements
 			//所有的客户保存在companyList中,出去不是今天需要联系的
 			for(int i=0;i<allcompanyList.size();i++){
 				Company company = allcompanyList.get(i);
-				java.sql.Date nextTouchDate = company.getNextTouchDate();
-				if(nextTouchDate.toString().equals(DateFormatUtils.format(new Date(), "yyyy-MM-dd"))){
-					companyList.add(company);
+				if(company.getNextTouchDate()!=null){
+					java.sql.Date nextTouchDate = company.getNextTouchDate();
+					if(nextTouchDate.toString().equals(DateFormatUtils.format(new Date(), "yyyy-MM-dd"))){
+						companyList.add(company);
+						//把今日要联系的客户数目放在request，后期可放在主界面上。
+						request.setAttribute("todayNeedsLinkCompanyNum", companyList.size());
+					}
 				}
 			}
 			request.setAttribute("companyList", companyList);
@@ -149,6 +161,7 @@ public class CompanyAction extends BaseAction implements
 	 * 
 	 * @return
 	 */
+	@Limit(module = "company", privilege = "changeHandler")
 	public String changeHandler() {
 		// 获取客户ids
 		String sids = request.getParameter("ids");
@@ -174,6 +187,7 @@ public class CompanyAction extends BaseAction implements
 	 * 
 	 * @return
 	 */
+	@Limit(module = "company", privilege = "showChangePerson")
 	public String showChangePerson() {
 		// 获取系统中所有的用户
 		List<SysUser> sysUserSelect = sysUserService.findAllSysUsers();
@@ -186,6 +200,7 @@ public class CompanyAction extends BaseAction implements
 	 * 
 	 * @return
 	 */
+	@Limit(module = "company", privilege = "updateNextTouchTime")
 	public String updateNextTouchTime() {
 		// 获取客户Id
 		String ssids = request.getParameter("ids");
@@ -211,6 +226,7 @@ public class CompanyAction extends BaseAction implements
 	 * 
 	 * @return
 	 */
+	@Limit(module = "company", privilege = "showNextTouchTime")
 	public String showNextTouchTime() {
 		return "showNextTouchTime";
 	}
@@ -220,6 +236,7 @@ public class CompanyAction extends BaseAction implements
 	 * 
 	 * @return
 	 */
+	@Limit(module = "company", privilege = "showShareViewOne")
 	public String showShareViewOne() {
 		// 获取客户id
 		String sid = request.getParameter("id");
@@ -242,6 +259,7 @@ public class CompanyAction extends BaseAction implements
 	 * 
 	 * @return
 	 */
+	@Limit(module = "company", privilege = "updateshareCancelOne")
 	public String updateshareCancelOne() {
 		String sid = request.getParameter("id");
 		// 获取当前的登录用户
@@ -263,6 +281,7 @@ public class CompanyAction extends BaseAction implements
 	 * 
 	 * @return
 	 */
+	@Limit(module = "company", privilege = "showShareCancelOne")
 	public String showShareCancelOne() {
 		// 获取客户id
 		String sid = request.getParameter("id");
@@ -280,6 +299,7 @@ public class CompanyAction extends BaseAction implements
 	 * 
 	 * @return
 	 */
+	@Limit(module = "company", privilege = "updateShareSetOne")
 	public String updateShareSetOne() {
 
 		// 获取客户id
@@ -470,6 +490,7 @@ public class CompanyAction extends BaseAction implements
 			if (company.getSysUser() != null) {
 				companyForm.setOwnerUser(company.getSysUser().getId() + "");
 			}
+			request.setAttribute("company", company);
 			return "edit";
 		}
 		return null;

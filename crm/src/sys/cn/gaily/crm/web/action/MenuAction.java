@@ -27,7 +27,7 @@ public class MenuAction extends BaseAction {
 	}
 
 	public String left() {
-		List<SysMenu> sysMenus = sysMenuService.findAllSysMenus();
+		List<SysMenu> sysMenus = sysMenuService.findAllSysMenusCache();
 		ServletContext sc = ServletActionContext.getServletContext();
 		sc.setAttribute("sysMenus", sysMenus);
 		return "left";

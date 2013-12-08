@@ -20,6 +20,7 @@ import org.springframework.orm.hibernate3.HibernateCallback;
 import org.springframework.orm.hibernate3.HibernateTemplate;
 import org.springframework.stereotype.Repository;
 import cn.gaily.crm.dao.CommonDao;
+import cn.gaily.crm.domain.SysPopedomPrivilege;
 import cn.gaily.crm.domain.SysRole;
 import cn.gaily.crm.domain.SysUser;
 import cn.gaily.crm.util.GenericClass;
@@ -170,6 +171,42 @@ public class CommonDaoImpl<T> implements CommonDao<T> {
 			LinkedHashMap<String, String> orderby) {
 		// TODO Auto-generated method stub
 		return this.findObjectsByConditionWithNoPage(null, null, orderby);
+	}
+
+	/**
+	 * 根据条件进行查询,启用二级缓存
+	 */
+	@Override
+	public List<T> findObjectsByConditionWithNoPageCache(String whereHql,
+			final Object[] params, LinkedHashMap<String, String> orderby) {
+		
+		//产生select语句 SELECT o FROM SysUserGroup o WHERE 
+		String hql = "select o from "+ entityClass.getSimpleName()+" o where 1=1 ";
+		//System.out.println(hql);
+		
+		//加入查询条件
+		if(StringUtils.isNotBlank(whereHql)){
+			hql = hql + whereHql;
+		}
+		
+		//加入排序规则	
+		String orderbystr = buildOrderBy(orderby);
+		hql = hql + orderbystr;
+		
+		final String fhql = hql;
+		@SuppressWarnings("unchecked")
+		List<T> list = (List<T>) this.hibernateTemplate.execute(new HibernateCallback() {
+			@Override
+			public Object doInHibernate(Session session) throws HibernateException, SQLException {
+				Query query = session.createQuery(fhql);
+				//使用查询缓存,必须加该行代码
+				query.setCacheable(true);
+//				System.out.println("second level cache : "+ fhql);
+				setParams(query, params);				
+				return query.list();
+			}
+		});	
+		return list;
 	}
 
 	

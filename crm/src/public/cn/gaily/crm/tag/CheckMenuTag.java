@@ -50,7 +50,7 @@ public class CheckMenuTag implements SimpleTag {
 		SysMenuPrivilegeService sysMenuPrivilegeService = (SysMenuPrivilegeService) ServiceProvinder
 				.getService("sysMenuPrivilegeService");
 		//获取菜单操作权限表中的所有数据  sys_menu_privilege 返回值为list集合
-		List<SysMenuPrivilege> list = sysMenuPrivilegeService.findAllSysMenuPrivileges();
+		List<SysMenuPrivilege> list = sysMenuPrivilegeService.findAllSysMenuPrivilegesCache();
 
 		//遍历集合
 		if(list!=null&&list.size()>0){

@@ -53,6 +53,7 @@ public class SysMenuPrivilegeServiceImpl implements SysMenuPrivilegeService {
 	}
 
 	@Override
+	@Transactional(readOnly=true)
 	public List<SysMenuPrivilege> findSysMenuPrivilegesByRoleId(String roleId) {
 		if(StringUtils.isNotBlank(roleId)){
 			String whereHql = " and o.id.roleId=?";
@@ -64,11 +65,20 @@ public class SysMenuPrivilegeServiceImpl implements SysMenuPrivilegeService {
 	}
 
 	@Override
+	@Transactional(readOnly=true)
 	public List<SysMenuPrivilege> findAllSysMenuPrivileges() {
 		LinkedHashMap<String, String> orderby = new LinkedHashMap<String, String>();
 		orderby.put("o.id.roleId", "asc");
 		
 		return sysMenuPrivilegeDao.findObjectsByConditionWithNoPage(orderby);
+	}
+
+	@Override
+	@Transactional(readOnly=true)
+	public List<SysMenuPrivilege> findAllSysMenuPrivilegesCache() {
+		LinkedHashMap<String, String> orderby = new LinkedHashMap<String, String>();
+		orderby.put("o.id.roleId", "asc");
+		return sysMenuPrivilegeDao.findObjectsByConditionWithNoPageCache(null,null,orderby);
 	}
 	
 }

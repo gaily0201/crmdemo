@@ -29,6 +29,14 @@ public class SysMenuServiceImpl implements SysMenuService {
 		return sysMenuDao.findObjectsByConditionWithNoPage(orderby);
 	}
 
+	@Override
+	@Transactional(readOnly=true)
+	public List<SysMenu> findAllSysMenusCache() {
+		LinkedHashMap<String, String> orderby = new LinkedHashMap<String, String>();
+		orderby.put("o.sort", "asc");
+		return sysMenuDao.findObjectsByConditionWithNoPageCache(null,null,orderby);
+	}
+
 	
 	
 }

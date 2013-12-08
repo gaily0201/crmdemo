@@ -355,6 +355,10 @@ public class SysUserAction extends BaseAction implements
 			this.addFieldError("name", "用户名或者密码输入错误！");
 			return "login";
 		}
+		if(sysUser.getStatus().equals("N")){
+			this.addFieldError("name", "该用户暂未启用，请联系管理员。");
+			return "login";
+		}
 		// 2.2登录成功，放置当前的对象到session中
 		SessionUtils.setSysUserToSession(request, sysUser);
 

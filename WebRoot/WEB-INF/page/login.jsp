@@ -103,7 +103,7 @@ body {
 			  <TR>
 			  	<TD class="td">用户帐号：</TD><TD class="td">
 			  		<input name="name" type="text" value="<%= name %>" id="name"/>
-			  		<s:fielderror fieldName="name"/>		
+			  		<font color="red"><s:fielderror fieldName="name"/></font>		
 			  	</TD>
 			  </TR>
 			  <TR>

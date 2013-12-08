@@ -25,10 +25,10 @@ public class SysUserServiceImpl implements SysUserService {
 
 	@Resource(name = "sysUserDao")
 	private SysUserDao sysUserDao;
-	
+
 	@Resource(name = "sysOperateLogDao")
 	private SysOperateLogDao sysOperateLogDao;
-	
+
 	@Override
 	@Transactional(readOnly = false)
 	public SysUser findSysUserByNameAndPassword(String name, String password) {
@@ -40,23 +40,31 @@ public class SysUserServiceImpl implements SysUserService {
 			// 调用Dao查询
 			List<SysUser> list = sysUserDao.findObjectsByConditionWithNoPage(
 					whereHql, params);
+			String actionContent = "";
 			if (list != null && list.size() == 1) {
 				SysUser curSysuser = list.get(0);
-				//处理日志
+				// 处理日志
 				SysOperateLog log = new SysOperateLog();
 				log.setUserName(curSysuser.getName());
 				log.setCnname(curSysuser.getCnname());
-				log.setActionType("登录系统");
-				String actionContent =curSysuser.getCnname()+"于 "+
-						DateFormatUtils.format(new Date(), "yyyy-MM-dd HH:mm:ss")+" 登录系统";
+				if (list.get(0).getStatus().equals("Y")) {
+					log.setActionType("登录系统");
+					actionContent = curSysuser.getCnname()
+							+ "于 "
+							+ DateFormatUtils.format(new Date(),
+									"yyyy-MM-dd HH:mm:ss") + " 登录系统";
+				} else if (list.get(0).getStatus().equals("N")) {
+					actionContent = curSysuser.getCnname()
+							+ "于"
+							+ DateFormatUtils.format(new Date(),
+									"yyyy-MM-dd HH:mm:ss") + " 试图登录系统，但被系统阻止！";
+				}
 				log.setActionContent(actionContent);
 				log.setActionDate(DateFormatUtils.format(new java.util.Date(),
 						"yyyy-MM-dd HH:mm:ss"));
 				sysOperateLogDao.save(log);
-				
-				return list.get(0);
-				
 			}
+			return list.get(0);
 		}
 		return null;
 	}
@@ -159,7 +167,7 @@ public class SysUserServiceImpl implements SysUserService {
 	@Override
 	@Transactional(readOnly = true)
 	public List<SysUser> findAllSysUsers() {
-		LinkedHashMap<String, String> orderby =  new LinkedHashMap<String, String>();
+		LinkedHashMap<String, String> orderby = new LinkedHashMap<String, String>();
 		orderby.put("o.id", "asc");
 		return sysUserDao.findObjectsByConditionWithNoPage(orderby);
 	}
@@ -168,15 +176,15 @@ public class SysUserServiceImpl implements SysUserService {
 	@Transactional(readOnly = false)
 	public void updateSysUsersPassword(SysUser curSysuser, SysUser sysUser) {
 		// TODO Auto-generated method stub
-		if(sysUser!=null&&curSysuser!=null){
+		if (sysUser != null && curSysuser != null) {
 			sysUserDao.update(sysUser);
-			
-			//处理日志
+
+			// 处理日志
 			SysOperateLog log = new SysOperateLog();
 			log.setUserName(curSysuser.getName());
 			log.setCnname(curSysuser.getCnname());
 			log.setActionType("修改密码");
-			String actionContent ="修改用户["+sysUser.getCnname()+"]的密码";
+			String actionContent = "修改用户[" + sysUser.getCnname() + "]的密码";
 			log.setActionContent(actionContent);
 			log.setActionDate(DateFormatUtils.format(new java.util.Date(),
 					"yyyy-MM-dd HH:mm:ss"));

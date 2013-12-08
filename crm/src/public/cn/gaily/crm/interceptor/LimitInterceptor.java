@@ -83,8 +83,14 @@ public class LimitInterceptor extends MethodFilterInterceptor {
 		boolean flag = false;
 		
 		//查询
-		SysPopedomPrivilegeService sysPopedomPrivilegeService = (SysPopedomPrivilegeService) ServiceProvinder.getService("sysPopedomPrivilegeService");
-		List<SysPopedomPrivilege> list  = sysPopedomPrivilegeService.findSysPopedomPrivileges();
+		SysPopedomPrivilegeService sysPopedomPrivilegeService = 
+				(SysPopedomPrivilegeService) ServiceProvinder.getService("sysPopedomPrivilegeService");
+		
+//		List<SysPopedomPrivilege> list  = sysPopedomPrivilegeService.findSysPopedomPrivileges();
+	
+		
+		//////////////////启用带缓存查取///////////////////
+		List<SysPopedomPrivilege> list  = sysPopedomPrivilegeService.findSysPopedomPrivilegesCache();
 		if(list!=null&&list.size()>0){
 			for(int i=0;i<list.size();i++){
 				SysPopedomPrivilege s = list.get(i);

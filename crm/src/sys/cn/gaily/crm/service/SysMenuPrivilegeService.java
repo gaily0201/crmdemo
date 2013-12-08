@@ -26,4 +26,10 @@ public interface SysMenuPrivilegeService {
 	 */
 	List<SysMenuPrivilege> findAllSysMenuPrivileges();
 
+	/**
+	 * 获得所有的菜单权限,带二级缓存
+	 * @return
+	 */
+	List<SysMenuPrivilege> findAllSysMenuPrivilegesCache();
+
 }

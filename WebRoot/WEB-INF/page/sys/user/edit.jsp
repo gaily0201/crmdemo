@@ -323,7 +323,7 @@
 		<font color='#FFFFFF'>&nbsp;修改密码</font>
 		</th>
 		<td align='right' onselectstart="return false">	
-			<a href='#' onClick="close_window()"/>
+			<a href='#' onClick="close.window()}"/>
 			<img src="${pageContext.request.contextPath}/ui/images/xpclose.jpg" width="20" height="20" border="0" align="absmiddle"></a>
 		</td>
 	</tr>

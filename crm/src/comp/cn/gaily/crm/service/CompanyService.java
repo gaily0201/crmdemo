@@ -102,5 +102,13 @@ public interface CompanyService {
 	 */
 	void changeHandler(SysUser curSysuser,Integer[] id, Integer new_owner);
 
+	/**
+	 * 查询属于当前用户的所有客户
+	 * @param curSysuser
+	 * @return
+	 */
+	List<Company> findMyOwnCompanys(SysUser curSysuser);
+
+
 
 }

@@ -116,7 +116,7 @@ public class CommonDaoImpl<T> implements CommonDao<T> {
 			@Override
 			public Object doInHibernate(Session session) throws HibernateException, SQLException {
 				Query query = session.createQuery(fhql);
-				setParams(query, params);				
+				setParams(query, params);
 				return query.list();
 			}
 		});	

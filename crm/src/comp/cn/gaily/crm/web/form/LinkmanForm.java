@@ -1,13 +1,16 @@
-package cn.gaily.crm.domain;
+package cn.gaily.crm.web.form;
+
+import cn.gaily.crm.domain.Company;
+import cn.gaily.crm.domain.SysUser;
 
 
 /**
  * CLinkman entity. @author MyEclipse Persistence Tools
  */
 
-public class Linkman implements java.io.Serializable {
+public class LinkmanForm implements java.io.Serializable {
 
-	// Fields
+	private static final long serialVersionUID = -3052203977765543996L;
 
 	private Integer id;
 	
@@ -15,7 +18,7 @@ public class Linkman implements java.io.Serializable {
 	private String sex;
 	private String code;
 	private String pycode;
-	private java.sql.Date birthday;
+	private String birthday;
 	private String fax;
 	private String department;
 	private String duty;
@@ -32,6 +35,7 @@ public class Linkman implements java.io.Serializable {
 	private String hobby;
 	private String taboo;
 	private String remark;
+	
 	private String creater;
 	private String createTime;
 	private String updater;
@@ -39,36 +43,24 @@ public class Linkman implements java.io.Serializable {
 	
 	private String dispensePerson;              //所属人的分配日期
 	private String dispenseDate;                //#分配日期(经手人变更的日期)-----
-	private Company company;  //保存所属公司  多个联系人对应一个公司
-	private SysUser sysUser;   //保存所属人  多个联系人对应一个用户
+
+	private String companyId;  //保存所属公司  多个联系人对应一个公司
+	private String sysUserId;   //保存所属人  多个联系人对应一个用户
+	
 	private Character shareFlag;
 	private String shareId;
-	
-	
+	public Integer getId() {
+		return id;
+	}
+	public void setId(Integer id) {
+		this.id = id;
+	}
 	
 	public String getName() {
 		return name;
 	}
 	public void setName(String name) {
 		this.name = name;
-	}
-	public String getDispenseDate() {
-		return dispenseDate;
-	}
-	public void setDispenseDate(String dispenseDate) {
-		this.dispenseDate = dispenseDate;
-	}
-	public String getDispensePerson() {
-		return dispensePerson;
-	}
-	public void setDispensePerson(String dispensePerson) {
-		this.dispensePerson = dispensePerson;
-	}
-	public Integer getId() {
-		return id;
-	}
-	public void setId(Integer id) {
-		this.id = id;
 	}
 	public String getSex() {
 		return sex;
@@ -88,11 +80,10 @@ public class Linkman implements java.io.Serializable {
 	public void setPycode(String pycode) {
 		this.pycode = pycode;
 	}
-	
-	public java.sql.Date getBirthday() {
+	public String getBirthday() {
 		return birthday;
 	}
-	public void setBirthday(java.sql.Date birthday) {
+	public void setBirthday(String birthday) {
 		this.birthday = birthday;
 	}
 	public String getFax() {
@@ -215,17 +206,24 @@ public class Linkman implements java.io.Serializable {
 	public void setUpdateTime(String updateTime) {
 		this.updateTime = updateTime;
 	}
-	public Company getCompany() {
-		return company;
+	public String getDispensePerson() {
+		return dispensePerson;
 	}
-	public void setCompany(Company company) {
-		this.company = company;
+	public void setDispensePerson(String dispensePerson) {
+		this.dispensePerson = dispensePerson;
 	}
-	public SysUser getSysUser() {
-		return sysUser;
+	public String getDispenseDate() {
+		return dispenseDate;
 	}
-	public void setSysUser(SysUser sysUser) {
-		this.sysUser = sysUser;
+	public void setDispenseDate(String dispenseDate) {
+		this.dispenseDate = dispenseDate;
+	}
+	
+	public String getCompanyId() {
+		return companyId;
+	}
+	public void setCompanyId(String companyId) {
+		this.companyId = companyId;
 	}
 	public Character getShareFlag() {
 		return shareFlag;
@@ -239,8 +237,13 @@ public class Linkman implements java.io.Serializable {
 	public void setShareId(String shareId) {
 		this.shareId = shareId;
 	}
-
+	public String getSysUserId() {
+		return sysUserId;
+	}
+	public void setSysUserId(String sysUserId) {
+		this.sysUserId = sysUserId;
+	}
 	
-
+	
 	
 }

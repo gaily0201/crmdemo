@@ -496,4 +496,15 @@ public class CompanyServiceImpl implements CompanyService {
 			}
 		}
 	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public List<Company> findMyOwnCompanys(SysUser curSysuser) {
+		String whereHql = " and o.sysUser.id = ?";
+		Object[] paramList ={curSysuser.getId()};
+		LinkedHashMap<String, String> orderby = new LinkedHashMap<String, String>();
+		orderby.put("o.id", "asc");
+		List<Company> myOwnComp = companyDao.findObjectsByConditionWithNoPageCache(whereHql, paramList, orderby);
+		return myOwnComp;
+	}
 }

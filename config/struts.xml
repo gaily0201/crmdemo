@@ -24,6 +24,7 @@
 			<interceptor-stack name="limitStack">
 				<interceptor-ref name="defaultStack"/>
 				<interceptor-ref name="limitInterceptor">
+					<param name="excludeMethods">pinyin</param>
 				</interceptor-ref>
 			</interceptor-stack>
 		</interceptors>
@@ -71,6 +72,11 @@
 <!-- //////////////////////////////////////////处理联系人////////////////////////////////////////////// -->
 		<action name="linkmanAction_*" class="cn.gaily.crm.web.action.LinkmanAction" method="{1}">
 			<result name="{1}">/WEB-INF/page/crm/customer/linkman/{1}.jsp</result>
+			<result name="listbyComp">/WEB-INF/page/crm/customer/linkman/list.jsp</result>
+			<result name="listAction" type="redirectAction">
+				<param name="actionName">linkmanAction_list</param>
+				<param name="nameSpace">/crm</param>
+			</result>
 		</action>
 <!-- //////////////////////////////////////// 处理联系记录///////////////////////////////////////////// -->
 		<action name="linktouchAction_*" class="cn.gaily.crm.web.action.LinktouchAction" method="{1}">
@@ -85,7 +91,7 @@
 			<interceptor-stack name="limitStack">
 				<interceptor-ref name="defaultStack"/>
 				<interceptor-ref name="limitInterceptor">
-					<param name="excludeMethods">isLogin,top,left,right</param>
+					<param name="excludeMethods">isLogin,top,left,right,pinyin</param>
 				</interceptor-ref>
 			</interceptor-stack>
 		</interceptors>

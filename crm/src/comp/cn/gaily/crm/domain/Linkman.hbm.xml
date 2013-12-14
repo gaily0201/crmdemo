@@ -16,11 +16,15 @@
         <many-to-one name="sysUser" class="cn.gaily.crm.domain.SysUser" lazy="false">
             <column name="ownerUser" />
         </many-to-one>
+        
         <property name="sex" type="string">
             <column name="sex" length="10" />
         </property>
         <property name="code" type="string">
             <column name="code" length="100" />
+        </property>
+        <property name="name" type="string">
+            <column name="name" length="50" />
         </property>
         <property name="pycode" type="string">
             <column name="pycode" length="100" />
@@ -88,11 +92,17 @@
         <property name="updateTime" type="string">
             <column name="updateTime" length="50" />
         </property>
-        <property name="shareFlag" type="string">
+        <property name="shareFlag" type="java.lang.Character">
             <column name="shareFlag" length="1" />
         </property>
         <property name="shareId" type="string">
             <column name="shareId" length="100" />
+        </property>
+        <property name="dispensePerson" type="string">
+            <column name="dispensePerson" length="50" />
+        </property>
+        <property name="dispenseDate" type="string">
+            <column name="dispenseDate" length="19" />
         </property>
     </class>
 </hibernate-mapping>

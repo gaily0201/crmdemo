@@ -697,7 +697,6 @@ public class CompanyAction extends BaseAction implements
 
 	@Override
 	public CompanyForm getModel() {
-		// TODO Auto-generated method stub
 		return companyForm;
 	}
 }

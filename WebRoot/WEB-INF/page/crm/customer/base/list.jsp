@@ -190,7 +190,7 @@
 		        <td><s:property value="#company.tel1"/></td>
 		        <td><s:property value="#company.email"/></td>
 		        <td><s:property value="#company.nextTouchDate"/></td>
-		        <td><a href="">查看</a></td>
+		        <td><a href="${pageContext.request.contextPath}/crm/linkmanAction_listbyComp.do?cid=<s:property value="#company.id"/>">查看</a></td>
 		        <td><a href="">查看</a></td>
 		        </tr>
 		</s:iterator>

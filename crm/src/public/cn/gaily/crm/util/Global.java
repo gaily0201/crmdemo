@@ -40,4 +40,8 @@ public class Global {
 	 */
 	public static final String SCALE = "scale";
 	
+	/**
+	 * 企业经营范围
+	 */
+	public static final String DEALIN ="dealin";
 }

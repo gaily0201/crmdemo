@@ -260,13 +260,12 @@ function check(){
 		  <tr>
 			<td width="16%">经营范围：</td>
 			<td width="34%">
-				<select id='dealin' name='dealin' style='width:90%'>
-						<option value='' >------</option>
-						<option value='证券/金融/投资'>证券/金融/投资</option>
-						<option value='电子/电器/半导体/仪器仪表'>电子/电器/半导体/仪器仪表</option>
-						<option value='计算机软件'>计算机软件</option>
-						<option value='计算机硬件'>计算机硬件</option>
-						<option value='其它'>其它</option>
+				 <s:if test="#request.dealinsSelect!=null">
+			        <s:select list="#request.dealinsSelect" name="dealin" id="dealin"  
+			                listKey="value" listValue="value" 
+			                headerKey="" headerValue="--------"
+			                cssStyle="width:90%"></s:select>
+			   </s:if>	<option value='其它'>其它</option>
 	            </select>
           </td>
 			<td width="16%">企业性质：</td>

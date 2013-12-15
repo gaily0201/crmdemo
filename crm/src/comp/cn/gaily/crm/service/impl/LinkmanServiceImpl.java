@@ -16,6 +16,7 @@ import cn.gaily.crm.bean.LinkmanSearch;
 import cn.gaily.crm.dao.LinkmanDao;
 import cn.gaily.crm.dao.SysCodeRuleDao;
 import cn.gaily.crm.dao.SysOperateLogDao;
+import cn.gaily.crm.domain.Company;
 import cn.gaily.crm.domain.Linkman;
 import cn.gaily.crm.domain.SysCodeRule;
 import cn.gaily.crm.domain.SysOperateLog;
@@ -212,21 +213,30 @@ public class LinkmanServiceImpl implements LinkmanService {
 	@Override
 	@Transactional(readOnly = false)
 	public void deleteLinkmansByIds(SysUser cursysUser, Integer[] ids) {
-		if(cursysUser!=null&&ids!=null&&ids.length>0){
-			linkmanDao.deleteByIds((java.io.Serializable[])ids);
+		if (cursysUser != null && ids != null && ids.length > 0) {
+			linkmanDao.deleteByIds((java.io.Serializable[]) ids);
 		}
 	}
 
 	@Override
-	public List<Linkman> findLinkmanByCompId(Integer cid) {
-		if(cid!=null){
+	@Transactional(readOnly = true)
+	public List<Linkman> findLinkmanByComp(SysUser curSysuser, Company company) {
+		if (company != null && curSysuser != null) {
 			String whereHql = "";
 			List paramList = new ArrayList();
-			whereHql = " and o.company.id =?";
-			paramList.add(cid);
-			LinkedHashMap<String, String> orderby = new LinkedHashMap<String, String>();
-			orderby.put("o.id", "asc");
-			return linkmanDao.findObjectsByConditionWithNoPageCache(whereHql, paramList.toArray(), orderby);
+			//客户所属人不属于当前用户，但该客户下的某些联系人被共享给了当前用户，同样进行查询
+			if (!company.getSysUser().getId().equals(curSysuser.getId())) {
+				
+			}
+			//客户的所属人属于当前用户，才进行查询
+			if (company.getSysUser().getId().equals(curSysuser.getId())) {
+				whereHql = " and o.company.id =?";
+				paramList.add(company.getId());
+				LinkedHashMap<String, String> orderby = new LinkedHashMap<String, String>();
+				orderby.put("o.id", "asc");
+				return linkmanDao.findObjectsByConditionWithNoPageCache(
+						whereHql, paramList.toArray(), orderby);
+			}
 		}
 		return null;
 	}

@@ -29,7 +29,7 @@ public class SysDictionaryTypeServiceImpl implements SysDictionaryTypeService{
 			Object[] params = {code};
 			LinkedHashMap<String, String> orderby = new LinkedHashMap<String, String>();
 			orderby.put("o.sort", "asc");
-			return sysDictionaryTypeDao.findObjectsByConditionWithNoPage(whereHql, params,orderby);
+			return sysDictionaryTypeDao.findObjectsByConditionWithNoPageCache(whereHql, params,orderby);
 		}
 		return null;
 	}

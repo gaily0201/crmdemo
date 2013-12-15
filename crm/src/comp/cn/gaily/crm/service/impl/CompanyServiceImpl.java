@@ -507,4 +507,10 @@ public class CompanyServiceImpl implements CompanyService {
 		List<Company> myOwnComp = companyDao.findObjectsByConditionWithNoPageCache(whereHql, paramList, orderby);
 		return myOwnComp;
 	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public List<Company> findAllCompanys() {
+		return companyDao.findObjectsByConditionWithNoPage();
+	}
 }

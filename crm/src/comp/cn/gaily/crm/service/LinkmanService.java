@@ -3,6 +3,7 @@ package cn.gaily.crm.service;
 import java.util.List;
 
 import cn.gaily.crm.bean.LinkmanSearch;
+import cn.gaily.crm.domain.Company;
 import cn.gaily.crm.domain.Linkman;
 import cn.gaily.crm.domain.SysUser;
 
@@ -57,6 +58,6 @@ public interface LinkmanService {
 	 * @param cid
 	 * @return
 	 */
-	List<Linkman> findLinkmanByCompId(Integer cid);
+	List<Linkman> findLinkmanByComp(SysUser curSysuser,Company company);
 
 }

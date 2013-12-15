@@ -41,6 +41,7 @@
 		<class-cache usage="nonstrict-read-write" class="cn.gaily.crm.domain.SysPopedomPrivilege"/>
 		<class-cache usage="nonstrict-read-write" class="cn.gaily.crm.domain.SysMenu"/>
 		<class-cache usage="nonstrict-read-write" class="cn.gaily.crm.domain.SysMenuPrivilege"/>
+		<class-cache usage="nonstrict-read-write" class="cn.gaily.crm.domain.SysDictionaryType"/>
 		
 	</session-factory>
 </hibernate-configuration>

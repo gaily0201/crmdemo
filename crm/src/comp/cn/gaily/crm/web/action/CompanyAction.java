@@ -74,39 +74,47 @@ public class CompanyAction extends BaseAction implements
 
 	/**
 	 * 已过期未联系的客户
+	 * 
 	 * @return
 	 * @throws IllegalAccessException
 	 * @throws InvocationTargetException
-	 * @throws ParseException 
+	 * @throws ParseException
 	 */
 	@Limit(module = "company", privilege = "datePassedLink")
-	public String datePassedLink() throws IllegalAccessException, InvocationTargetException, ParseException{
-		
+	public String datePassedLink() throws IllegalAccessException,
+			InvocationTargetException, ParseException {
+
 		CompanySearch companySearch = new CompanySearch();
 		BeanUtils.copyProperties(companySearch, companyForm);
 		SysUser curSysuser = SessionUtils.getSysUserFromSession(request);
 		if (curSysuser != null) {
-			List<Company> allcompanyList = companyService.findCompanyByCondition(curSysuser, companySearch);
+			List<Company> allcompanyList = companyService
+					.findCompanyByCondition(curSysuser, companySearch);
 			// 查询共享的客户
-			List<Company> sharedList = companyService.findSharedCompany(curSysuser);
+			List<Company> sharedList = companyService
+					.findSharedCompany(curSysuser);
 			if (sharedList != null && sharedList.size() > 0) {
 				allcompanyList.addAll(sharedList);
 			}
-			
+
 			List<Company> companyList = new ArrayList<Company>();
-			
-			//所有的客户保存在companyList中,出去不是今天需要联系的
-			for(int i=0;i<allcompanyList.size();i++){
+
+			// 所有的客户保存在companyList中,出去不是今天需要联系的
+			for (int i = 0; i < allcompanyList.size(); i++) {
 				Company company = allcompanyList.get(i);
-				if(company.getNextTouchDate()==null){
+				if (company.getNextTouchDate() == null) {
 					companyList.add(company);
 				}
-				if(company.getNextTouchDate()!=null){
+				if (company.getNextTouchDate() != null) {
 					java.sql.Date nextTouchDate = company.getNextTouchDate();
-					if (0>nextTouchDate.compareTo(DateUtils.parseDateStrictly(DateFormatUtils.format(new Date(), "yyyy-MM-dd"), new String[]{"yyyy-MM-dd"}))) {
-						//已过期未联系客户
+					if (0 > nextTouchDate.compareTo(DateUtils
+							.parseDateStrictly(DateFormatUtils.format(
+									new Date(), "yyyy-MM-dd"),
+									new String[] { "yyyy-MM-dd" }))) {
+						// 已过期未联系客户
 						companyList.add(company);
-						request.setAttribute("outofdateCompanyNum", companyList.size());
+						request.setAttribute("outofdateCompanyNum",
+								companyList.size());
 					}
 				}
 			}
@@ -115,38 +123,44 @@ public class CompanyAction extends BaseAction implements
 		}
 		return null;
 	}
-	
+
 	/**
 	 * 今日需要联系的客户
+	 * 
 	 * @return
-	 * @throws InvocationTargetException 
-	 * @throws IllegalAccessException 
+	 * @throws InvocationTargetException
+	 * @throws IllegalAccessException
 	 */
 	@Limit(module = "company", privilege = "todayNeedsLink")
-	public String todayNeedsLink() throws IllegalAccessException, InvocationTargetException{
-		
+	public String todayNeedsLink() throws IllegalAccessException,
+			InvocationTargetException {
+
 		CompanySearch companySearch = new CompanySearch();
 		BeanUtils.copyProperties(companySearch, companyForm);
 		SysUser curSysuser = SessionUtils.getSysUserFromSession(request);
 		if (curSysuser != null) {
-			List<Company> allcompanyList = companyService.findCompanyByCondition(curSysuser, companySearch);
+			List<Company> allcompanyList = companyService
+					.findCompanyByCondition(curSysuser, companySearch);
 			// 查询共享的客户
-			List<Company> sharedList = companyService.findSharedCompany(curSysuser);
+			List<Company> sharedList = companyService
+					.findSharedCompany(curSysuser);
 			if (sharedList != null && sharedList.size() > 0) {
 				allcompanyList.addAll(sharedList);
 			}
-			
+
 			List<Company> companyList = new ArrayList<Company>();
-			
-			//所有的客户保存在companyList中,出去不是今天需要联系的
-			for(int i=0;i<allcompanyList.size();i++){
+
+			// 所有的客户保存在companyList中,出去不是今天需要联系的
+			for (int i = 0; i < allcompanyList.size(); i++) {
 				Company company = allcompanyList.get(i);
-				if(company.getNextTouchDate()!=null){
+				if (company.getNextTouchDate() != null) {
 					java.sql.Date nextTouchDate = company.getNextTouchDate();
-					if(nextTouchDate.toString().equals(DateFormatUtils.format(new Date(), "yyyy-MM-dd"))){
+					if (nextTouchDate.toString().equals(
+							DateFormatUtils.format(new Date(), "yyyy-MM-dd"))) {
 						companyList.add(company);
-						//把今日要联系的客户数目放在request，后期可放在主界面上。
-						request.setAttribute("todayNeedsLinkCompanyNum", companyList.size());
+						// 把今日要联系的客户数目放在request，后期可放在主界面上。
+						request.setAttribute("todayNeedsLinkCompanyNum",
+								companyList.size());
 					}
 				}
 			}
@@ -155,7 +169,7 @@ public class CompanyAction extends BaseAction implements
 		}
 		return null;
 	}
-	
+
 	/**
 	 * 经手人变更
 	 * 
@@ -167,7 +181,7 @@ public class CompanyAction extends BaseAction implements
 		String sids = request.getParameter("ids");
 		// 获取当前的登录用户
 		SysUser curSysuser = SessionUtils.getSysUserFromSession(request);
-		if (StringUtils.isNotBlank(sids)&&curSysuser!=null) {
+		if (StringUtils.isNotBlank(sids) && curSysuser != null) {
 			// 获取新的所有者
 			String[] ids = sids.split(",");
 			Integer[] id = DataType.converterStringArray2IntegerArray(ids);
@@ -175,7 +189,7 @@ public class CompanyAction extends BaseAction implements
 			String snew_owner = request.getParameter("new_owner");
 			if (StringUtils.isNotBlank(snew_owner)) {
 				Integer new_owner = Integer.parseInt(snew_owner.trim());
-				companyService.changeHandler(curSysuser,id, new_owner);
+				companyService.changeHandler(curSysuser, id, new_owner);
 				return "changeHandler";
 			}
 		}
@@ -206,7 +220,7 @@ public class CompanyAction extends BaseAction implements
 		String ssids = request.getParameter("ids");
 		// 获取当前的登录用户
 		SysUser curSysuser = SessionUtils.getSysUserFromSession(request);
-		if (StringUtils.isNotBlank(ssids)&&curSysuser!=null) {
+		if (StringUtils.isNotBlank(ssids) && curSysuser != null) {
 			String[] sids = ssids.split(",");
 			Integer[] ids = DataType.converterStringArray2IntegerArray(sids);
 
@@ -215,7 +229,8 @@ public class CompanyAction extends BaseAction implements
 			java.sql.Date next_touch_date = java.sql.Date
 					.valueOf(snext_touch_date);
 
-			companyService.updateNextTouchTime(curSysuser, ids, next_touch_date);
+			companyService
+					.updateNextTouchTime(curSysuser, ids, next_touch_date);
 			return "nextTouchTime";
 		}
 		return null;
@@ -264,12 +279,12 @@ public class CompanyAction extends BaseAction implements
 		String sid = request.getParameter("id");
 		// 获取当前的登录用户
 		SysUser curSysuser = SessionUtils.getSysUserFromSession(request);
-		if (StringUtils.isNotBlank(sid)&&curSysuser!=null) {
+		if (StringUtils.isNotBlank(sid) && curSysuser != null) {
 			Integer id = Integer.parseInt(sid);
 			// 获取模块名称
 			String s_module = request.getParameter("s_module");
 			if (StringUtils.isNotBlank(s_module)) {
-				companyService.updateShareCancelOne(curSysuser,id, s_module);
+				companyService.updateShareCancelOne(curSysuser, id, s_module);
 				return "updateshareCancelOne";
 			}
 		}
@@ -318,13 +333,16 @@ public class CompanyAction extends BaseAction implements
 					String sharetype = request.getParameter("sharetype");
 					if (StringUtils.isNotBlank(sharetype)) {
 						// 获取当前的登录用户
-						SysUser curSysuser = SessionUtils.getSysUserFromSession(request);
+						SysUser curSysuser = SessionUtils
+								.getSysUserFromSession(request);
 						if (curSysuser != null) {
 							if ("add".equals(sharetype)) { // 增加共享
-								companyService.addUpdateShareSetOne(curSysuser, s_module, id, uids);
+								companyService.addUpdateShareSetOne(curSysuser,
+										s_module, id, uids);
 							}
 							if ("minus".equals(sharetype)) { // 减少共享
-								companyService.minusUpdateShareSetOne(curSysuser, s_module, id, uids);
+								companyService.minusUpdateShareSetOne(
+										curSysuser, s_module, id, uids);
 							}
 						}
 					}
@@ -374,7 +392,7 @@ public class CompanyAction extends BaseAction implements
 			// 获取当前的登录用户
 			SysUser curSysuser = SessionUtils.getSysUserFromSession(request);
 			if (curSysuser != null) {
-				companyService.deleteCompanyByIds(curSysuser,ids);
+				companyService.deleteCompanyByIds(curSysuser, ids);
 				return "listAction";
 			}
 		}
@@ -462,7 +480,11 @@ public class CompanyAction extends BaseAction implements
 		List<SysDictionaryType> kindsSelect = sysDictionaryTypeService
 				.findSysDictionaryTypeByCode(Global.KIND);
 		request.setAttribute("kindsSelect", kindsSelect);
-
+		
+		// 处理经营范围下拉选
+		List<SysDictionaryType> dealinsSelect = sysDictionaryTypeService
+				.findSysDictionaryTypeByCode(Global.DEALIN);
+		request.setAttribute("dealinsSelect", dealinsSelect);
 		// 获取所有的省的信息
 		List<Province> provincesSelect = provinceService.findAllProvinces();
 		request.setAttribute("provincesSelect", provincesSelect);
@@ -521,6 +543,10 @@ public class CompanyAction extends BaseAction implements
 		List<SysDictionaryType> qualitySelect = sysDictionaryTypeService
 				.findSysDictionaryTypeByCode(Global.QUALITY);
 		request.setAttribute("qualitySelect", qualitySelect);
+		// 处理经营范围下拉选
+		List<SysDictionaryType> dealinsSelect = sysDictionaryTypeService
+				.findSysDictionaryTypeByCode(Global.DEALIN);
+		request.setAttribute("dealinsSelect", dealinsSelect);
 
 		CompanySearch companySearch = new CompanySearch();
 		BeanUtils.copyProperties(companySearch, companyForm);
@@ -626,7 +652,10 @@ public class CompanyAction extends BaseAction implements
 		List<SysDictionaryType> kindsSelect = sysDictionaryTypeService
 				.findSysDictionaryTypeByCode(Global.KIND);
 		request.setAttribute("kindsSelect", kindsSelect);
-
+		// 处理经营范围下拉选
+		List<SysDictionaryType> dealinsSelect = sysDictionaryTypeService
+				.findSysDictionaryTypeByCode(Global.DEALIN);
+		request.setAttribute("dealinsSelect", dealinsSelect);
 		// 获取所有的省的信息
 		List<Province> provincesSelect = provinceService.findAllProvinces();
 		request.setAttribute("provincesSelect", provincesSelect);
@@ -655,6 +684,7 @@ public class CompanyAction extends BaseAction implements
 	 * @return
 	 * @throws IOException
 	 */
+	@Limit(module = "company", privilege = "showCity")
 	public String showCity() throws IOException {
 		// 获取省的名称
 		String name = request.getParameter("name");

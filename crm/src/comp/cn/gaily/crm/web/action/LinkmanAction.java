@@ -45,10 +45,14 @@ public class LinkmanAction extends BaseAction implements
 	 */
 	@Limit(module="linkman",privilege="listbyComp")
 	public String listbyComp(){
+		//获取客户id
 		String scid = request.getParameter("cid");
-		if(StringUtils.isNotBlank(scid)){
+		//获取当前 用户
+		SysUser curSysuser = SessionUtils.getSysUserFromSession(request);
+		if(StringUtils.isNotBlank(scid)&&curSysuser!=null){
 			Integer cid = Integer.parseInt(scid);
-			List<Linkman> linkmans = linkmanService.findLinkmanByCompId(cid);
+			Company company = companyService.findCompanyById(cid);
+			List<Linkman> linkmans = linkmanService.findLinkmanByComp(curSysuser, company);
 			request.setAttribute("linkmans", linkmans);
 			return "listbyComp";
 		}
@@ -123,10 +127,8 @@ public class LinkmanAction extends BaseAction implements
 			InvocationTargetException {
 		// 获取当前用户
 		SysUser curSysuser = SessionUtils.getSysUserFromSession(request);
-
 		// 处理联系人中的所属公司下拉选
-		List<Company> companySelect = companyService
-				.findMyOwnCompanys(curSysuser);
+		List<Company> companySelect = companyService.findAllCompanys();
 		request.setAttribute("companySelect", companySelect);
 		// 获取联系人id
 		String sid = request.getParameter("id");

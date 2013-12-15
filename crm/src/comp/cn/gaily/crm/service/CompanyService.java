@@ -109,6 +109,12 @@ public interface CompanyService {
 	 */
 	List<Company> findMyOwnCompanys(SysUser curSysuser);
 
+	/**
+	 * 查找所有的公司
+	 * @return
+	 */
+	List<Company> findAllCompanys();
+
 
 
 }

@@ -24,26 +24,24 @@
        });
 	}
 
-	function showCity(value){
-	    $.post("${pageContext.request.contextPath}/crm/companyAction_showCity.do",{name:value} ,function(data,textStatuts){
-             //alert(data);
-             var dataObj=eval("("+data+")");
-             //alert(dataObj);
-             
-             //删除城市
-             $("select[name='city'] option[value!='']").remove();
-             
-             // <select name="city" style="width:90%">
-                 //<option value="">--------</option>
-             //</select>
-             for(var i=0;i<dataObj.length;i++){
-                   var $option=$("<option></option>");
-                   $option.attr("value",dataObj[i].name);
-                   $option.text(dataObj[i].name);
-                   $("select[name='city']").append($option);
-             }
-        });
-	}
+		function showCity(value){
+		    $.post("${pageContext.request.contextPath}/crm/companyAction_showCity.do",{name:value} ,function(data,textStatuts){
+	             //alert(data);
+	             var dataObj=eval("("+data+")");
+	             //删除城市
+	             $("select[name='city'] option[value!='']").remove();
+	             
+	             // <select name="city" style="width:90%">
+	                 //<option value="">--------</option>
+	             //</select>
+	             for(var i=0;i<dataObj.length;i++){
+	                   var $option=$("<option></option>");
+	                   $option.attr("value",dataObj[i].name);
+	                   $option.text(dataObj[i].name);
+	                   $("select[name='city']").append($option);
+	             }
+	        });
+		}
 	
 </script>
 </head>
@@ -143,7 +141,8 @@
 			      <s:select list="#request.provincesSelect" name="province" id="province"  
 			                listKey="name" listValue="name" 
 			                headerKey="" headerValue="--------"
-			                onchange="showCity(this.value)" cssStyle="width:90%"></s:select>
+			                onchange="showCity(this.value)"
+			                cssStyle="width:90%"></s:select>
 			  </s:if>
 			</td>
 			<td>城市：</td>
@@ -231,14 +230,12 @@
 		  <tr>
 			<td width="16%">经营范围：</td>
 			<td width="34%">
-				<select id='dealin' name='dealin' style='width:90%'>
-						<option value='' >------</option>
-						<option value='证券/金融/投资'>证券/金融/投资</option>
-						<option value='电子/电器/半导体/仪器仪表'>电子/电器/半导体/仪器仪表</option>
-						<option value='计算机软件'>计算机软件</option>
-						<option value='计算机硬件'>计算机硬件</option>
-						<option value='其它'>其它</option>
-	            </select>
+	            <s:if test="#request.dealinsSelect!=null">
+			        <s:select list="#request.dealinsSelect" name="dealin" id="dealin"  
+			                listKey="value" listValue="value" 
+			                headerKey="" headerValue="--------"
+			                cssStyle="width:90%"></s:select>
+			   </s:if>
           </td>
 			<td width="16%">企业性质：</td>
 			<td width="34%">

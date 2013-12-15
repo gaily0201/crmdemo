@@ -11,37 +11,50 @@
 		<property name="hibernate.hbm2ddl.auto">true</property>
 		<property name="hibernate.show_sql">true</property>
 		<!-- 配置二级缓存 -->
-		<property name="hibernate.cache.use_second_level_cache">true</property>
+		<property name="hibernate.cache.use_second_level_cache">
+			true
+		</property>
 		<!-- 配置二级缓存的供应商 -->
-		<property name="hibernate.cache.provider_class">org.hibernate.cache.EhCacheProvider</property>
+		<property name="hibernate.cache.provider_class">
+			org.hibernate.cache.EhCacheProvider
+		</property>
 		<!-- 启用查询缓存 -->
 		<property name="hibernate.cache.use_query_cache">true</property>
-		
-				
+
+
 		<mapping resource="cn/gaily/crm/domain/SysUserGroup.hbm.xml" />
 		<mapping resource="cn/gaily/crm/domain/SysRole.hbm.xml" />
 		<mapping resource="cn/gaily/crm/domain/SysUser.hbm.xml" />
 		<mapping resource="cn/gaily/crm/domain/SysPopedom.hbm.xml" />
-		<mapping resource="cn/gaily/crm/domain/SysPopedomPrivilege.hbm.xml" />
+		<mapping
+			resource="cn/gaily/crm/domain/SysPopedomPrivilege.hbm.xml" />
 		<mapping resource="cn/gaily/crm/domain/SysMenu.hbm.xml" />
-		<mapping resource="cn/gaily/crm/domain/SysMenuPrivilege.hbm.xml" />
+		<mapping
+			resource="cn/gaily/crm/domain/SysMenuPrivilege.hbm.xml" />
 		<mapping resource="cn/gaily/crm/domain/Company.hbm.xml" />
 		<mapping resource="cn/gaily/crm/domain/SysCodeRule.hbm.xml" />
-		<mapping resource="cn/gaily/crm/domain/SysDictionaryType.hbm.xml" />
+		<mapping
+			resource="cn/gaily/crm/domain/SysDictionaryType.hbm.xml" />
 		<mapping resource="cn/gaily/crm/domain/City.hbm.xml" />
 		<mapping resource="cn/gaily/crm/domain/Province.hbm.xml" />
 		<mapping resource="cn/gaily/crm/domain/Linkman.hbm.xml" />
 		<mapping resource="cn/gaily/crm/domain/SysOperateLog.hbm.xml" />
+		<mapping resource="cn/gaily/crm/domain/Linktouch.hbm.xml" />
 
 		<!-- 配置类级别的二级缓存,可注释以下内容,
-			   放开CommonDaoImpl.class中的
-				System.out.println("second level cache : "+ fhql);
-			  进行比较	.
+			放开CommonDaoImpl.class中的
+			System.out.println("second level cache : "+ fhql);
+			进行比较	.
 		-->
-		<class-cache usage="nonstrict-read-write" class="cn.gaily.crm.domain.SysPopedomPrivilege"/>
-		<class-cache usage="nonstrict-read-write" class="cn.gaily.crm.domain.SysMenu"/>
-		<class-cache usage="nonstrict-read-write" class="cn.gaily.crm.domain.SysMenuPrivilege"/>
-		<class-cache usage="nonstrict-read-write" class="cn.gaily.crm.domain.SysDictionaryType"/>
-		
+		<class-cache usage="nonstrict-read-write"
+			class="cn.gaily.crm.domain.SysPopedomPrivilege" />
+		<class-cache usage="nonstrict-read-write"
+			class="cn.gaily.crm.domain.SysMenu" />
+		<class-cache usage="nonstrict-read-write"
+			class="cn.gaily.crm.domain.SysMenuPrivilege" />
+		<class-cache usage="nonstrict-read-write"
+			class="cn.gaily.crm.domain.SysDictionaryType" />
+		<class-cache usage="nonstrict-read-write"
+			class="cn.gaily.crm.domain.SysUser" />
 	</session-factory>
 </hibernate-configuration>

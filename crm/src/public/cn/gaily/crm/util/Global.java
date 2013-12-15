@@ -31,10 +31,12 @@ public class Global {
 	 * 企业性质
 	 */
 	public static final String KIND = "kind";
-	public static final String LINK_FASHION = "link_fashion";
-	public static final String LINK_TYPE = "link_type";
-	public static final String FILE_GRADE = "file_grade";
-	public static final String FILE_TYPE = "file_type";
+	
+	/**
+	 * 联系方式
+	 */
+	public static final String LINKFASHION = "linkfashion";
+	public static final String LINKTYPE = "linktype";
 	/**
 	 * 公司规模
 	 */

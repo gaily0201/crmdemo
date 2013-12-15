@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="cn.gaily.crm.domain.Linktouch" table="c_linktouch" catalog="crmdemo">
+        <id name="id" type="integer">
+            <column name="id" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="linkman" class="cn.gaily.crm.domain.Linkman" lazy="false">
+            <column name="linkMan" />
+        </many-to-one>
+        <many-to-one name="sysUser" class="cn.gaily.crm.domain.SysUser" lazy="false">
+            <column name="ownerUser" />
+        </many-to-one>
+        <property name="linkFashion" type="string">
+            <column name="linkFashion" length="50" />
+        </property>
+        <property name="linkTime" type="java.sql.Date">
+            <column name="linkTime" length="19" />
+        </property>
+        <property name="linkType" type="string">
+            <column name="link_type" length="50" />
+        </property>
+        <property name="content" type="string">
+            <column name="content" length="65535" />
+        </property>
+        <property name="nextTouchDate" type="java.sql.Date">
+            <column name="nextTouchDate" length="19" />
+        </property>
+        <property name="nextTouchAim" type="string">
+            <column name="nextTouchAim" length="65535" />
+        </property>
+        <property name="userName" type="string">
+            <column name="userName" length="50" />
+        </property>
+        <property name="remark" type="string">
+            <column name="remark" length="65535" />
+        </property>
+        <property name="creater" type="string">
+            <column name="creater" length="50" />
+        </property>
+        <property name="createTime" type="string">
+            <column name="createTime" length="50" />
+        </property>
+        <property name="updater" type="string">
+            <column name="updater" length="50" />
+        </property>
+        <property name="updateTime" type="string">
+            <column name="updateTime" length="50" />
+        </property>
+        <property name="dispensePerson" type="string">
+            <column name="dispensePerson" length="50" />
+        </property>
+        <property name="dispenseDate" type="string">
+            <column name="dispenseDate" length="19" />
+        </property>
+    </class>
+</hibernate-mapping>

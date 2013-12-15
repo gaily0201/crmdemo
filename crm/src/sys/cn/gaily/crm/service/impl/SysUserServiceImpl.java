@@ -169,7 +169,7 @@ public class SysUserServiceImpl implements SysUserService {
 	public List<SysUser> findAllSysUsers() {
 		LinkedHashMap<String, String> orderby = new LinkedHashMap<String, String>();
 		orderby.put("o.id", "asc");
-		return sysUserDao.findObjectsByConditionWithNoPage(orderby);
+		return sysUserDao.findObjectsByConditionWithNoPageCache(null,null,orderby);
 	}
 
 	@Override
@@ -190,5 +190,21 @@ public class SysUserServiceImpl implements SysUserService {
 					"yyyy-MM-dd HH:mm:ss"));
 			sysOperateLogDao.save(log);
 		}
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public SysUser findSysUserByCnname(String userName) {
+		if(StringUtils.isNotBlank(userName)){
+			String whereHql = "";
+			List paramList = new ArrayList();
+			whereHql = " and o.cnname=?";
+			paramList.add(userName);
+			List<SysUser> sysUser =  sysUserDao.findObjectsByConditionWithNoPage(whereHql, paramList.toArray());
+			if(sysUser.size()==1){
+				return sysUser.get(0);
+			}
+		}
+		return null;
 	}
 }

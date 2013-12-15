@@ -1,0 +1,44 @@
+权限和菜单启用hibernate二级缓存
+
+1.导入二级缓存配置文件:eache.xml
+	 <diskStore path="java.io.tmpdir"/>
+    <defaultCache
+            maxElementsInMemory="10000"
+            eternal="true"
+            overflowToDisk="true"
+            diskPersistent="true"
+            diskExpiryThreadIntervalSeconds="120"
+            />
+	</ehcache>
+	
+2.配置Hibernate文件启用二级缓存
+		<!-- 配置二级缓存 -->
+		<property name="hibernate.cache.use_second_level_cache">true</property>
+		<!-- 配置二级缓存的供应商 -->
+		<property name="hibernate.cache.provider_class">org.hibernate.cache.EhCacheProvider</property>
+		<!-- 启用查询缓存 -->
+		<property name="hibernate.cache.use_query_cache">true</property>
+		
+3.验证权限拦截器LimitInterceptor.class配置二级缓存
+	3.1 //////////////////启用带缓存查取///////////////////
+		List<SysPopedomPrivilege> list  = sysPopedomPrivilegeService.findSysPopedomPrivilegesCache();
+	3.2 
+		@Override
+		public List<SysPopedomPrivilege> findSysPopedomPrivilegesCache() {
+			LinkedHashMap<String, String> orderby  = new LinkedHashMap<String, String>();
+			orderby.put("o.id.roleId", "asc");
+			return sysPopedomPrivilegeDao.findObjectsByConditionWithNoPageCache(null,null,orderby);
+		}
+	3.3 DAO启用二级缓存
+		public List<T> findObjectsByConditionWithNoPageCache(String whereHql,
+			final Object[] params, LinkedHashMap<String, String> orderby)；
+			//使用查询缓存,必须加该行代码
+			query.setCacheable(true);
+			
+4.在Hibernate加入配置，同理配置如下两个加载菜单缓存
+	<!-- 配置类级别的二级缓存-->
+		<class-cache usage="read-only" class="cn.gaily.crm.domain.SysPopedomPrivilege"/>
+		<class-cache usage="read-only" class="cn.gaily.crm.domain.SysMenu"/>
+		<class-cache usage="read-only" class="cn.gaily.crm.domain.SysMenuPrivilege"/>
+	
+	

@@ -1,141 +1,184 @@
-<%@ page language="java"  pageEncoding="UTF-8" contentType="text/html; charset=utf-8" %>
+<%@ page language="java" pageEncoding="UTF-8"
+	contentType="text/html; charset=utf-8"%>
+<%@ taglib uri="/struts-tags" prefix="s"%>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>填写拜访记录</title>
-<link href="${pageContext.request.contextPath}/ui/css/style_cn.css" rel="stylesheet" type="text/css">
+<link href="${pageContext.request.contextPath}/ui/css/style_cn.css"
+	rel="stylesheet" type="text/css">
 
-<script src="${pageContext.request.contextPath}/ui/js/jquery-1.4.2.js" type="text/javascript"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/ui/js/date_input/jquery.datepick.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/ui/js/date_input/jquery.datepick-zh-CN.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/ui/js/date_input/calendar.js"></script>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/ui/js/date_input/jquery.datepick.css" type="text/css">
+<script src="${pageContext.request.contextPath}/ui/js/jquery-1.4.2.js"
+	type="text/javascript"></script>
+<script type="text/javascript"
+	src="${pageContext.request.contextPath}/ui/js/date_input/jquery.datepick.js"></script>
+<script type="text/javascript"
+	src="${pageContext.request.contextPath}/ui/js/date_input/jquery.datepick-zh-CN.js"></script>
+<script type="text/javascript"
+	src="${pageContext.request.contextPath}/ui/js/date_input/calendar.js"></script>
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/ui/js/date_input/jquery.datepick.css"
+	type="text/css">
 
 </head>
- 
+
 <body>
-<form name="ActionForm" method="post" action="${pageContext.request.contextPath}/crm/customer/linktouch/edit.jsp" onSubmit="check();">
-<input type="hidden" name="method" value="add">
-<input type="hidden" name="cid" value="8">
-<div class="control">
-	<button type='button' class='button' onMouseOver="this.className='button_over';" onMouseOut="this.className='button';"  onClick="document.ActionForm.submit();"><img src="${pageContext.request.contextPath}/ui/images/button/baocun.png" border='0' align='absmiddle'>&nbsp;保存</button>
-	<button type='button' class='button' onMouseOver="this.className='button_over';" onMouseOut="this.className='button';"  onClick="forward('linktouch.do?method=list')"><img src="${pageContext.request.contextPath}/ui/images/button/fanhui.png" border='0' align='absmiddle'>&nbsp;返回</button>
-</div>
- 
-<table width="100%" border="0" cellspacing="0" class="tabForm">
-  <tr>
-    <td colspan="4" class="th_head">
-		<div id="menuArrow1" style="background:url(${pageContext.request.contextPath}/ui/images/down.gif) no-repeat center;float:left;">&nbsp;</div>
-		<div id="menuTitle1" style="font-weight:bold">基本信息</div>
-	</td>
-  </tr>
-  <tr>
-  	<td>
-		<div id="menu1">
-		  <table width="100%" border="0" cellspacing="0" cellpadding="0">		
-		  <tr>
-			<td width="16%" class="red">联系人：</td>
-			<td width="34%">
-				<input type='text' id='linkMan' name='linkMan' value='' style='width:84%' class='combox-input'><img src='${pageContext.request.contextPath}/ui/images/combox_b.jpg' id='link_manIMG' width='18' height='20' border='0' align='absmiddle'/><script>var link_man = new Roly.Combox('link_man','link_manIMG');link_man.addItem('张丹枫');link_man.addItem('王刚');link_man.addItem('张国立');link_man.addItem('ddd');link_man.init();</script>
-			</td>
-			<td width="16%">联系方式：</td>
-			<td width="34%"><select id='linkFashion' name='linkFashion' style='width:90%'>
-<option value='' selected>------</option>
-<option value='他人转达'>他人转达</option>
-<option value='通过代理商联系'>通过代理商联系</option>
-<option value='登门拜访'>登门拜访</option>
-<option value='网络聊天（QQ/MSN）'>网络聊天（QQ/MSN）</option>
-<option value='邮寄包裹信笺'>邮寄包裹信笺</option>
-<option value='短信留言'>短信留言</option>
-<option value='电话传真'>电话传真</option>
-</select><img border='0' align='absmiddle' src='${pageContext.request.contextPath}/ui/images/service.gif' style='cursor:hand' onClick="OpenWin('${pageContext.request.contextPath}/sys/dictionary/batchEditDetails.jsp','',500,300)"></td>
-		  </tr>
-		  <tr>
-			<td class="red">联系时间：</td>
-			<td><input type='text' id='linkTime' class="dateClassStyle" name='linkTime' value='2010-03-29' style='width:90%'></td>
-			<td>联系类别：</td>
-			<td><select id='link_type' name='link_type' style='width:90%'>
-<option value='' selected>------</option>
-<option value='初次接触'>初次接触</option>
-<option value='二次跟进'>二次跟进</option>
-<option value='对方回馈信息'>对方回馈信息</option>
-<option value='合同确认'>合同确认</option>
-<option value='洽谈签约'>洽谈签约</option>
-<option value='售后服务'>售后服务</option>
-<option value='客户回访'>客户回访</option>
-<option value='节日问候'>节日问候</option>
-</select><img border='0' align='absmiddle' src='${pageContext.request.contextPath}/ui/images/service.gif' style='cursor:hand' onClick="OpenWin('${pageContext.request.contextPath}/sys/dictionary/batchEditDetails.jsp','',500,300)"></td>
-		  </tr>
-		  <tr>
-			<td class="red">联系记录：</td>
-			<td colspan="3"><button type='button' class='button' onMouseOver="this.className='button_over';" onMouseOut="this.className='button';"  onClick="OpenWin('${pageContext.request.contextPath}/include/chooseDictionary.jsp','',580,400);">
-			    <img src="${pageContext.request.contextPath}/ui/images/button/xuanze.png" border='0' align='absmiddle'>&nbsp;选择</button>
-			    <textarea name="content" rows="4" id="content" style="width:96%"></textarea></td>
-		  </tr>
-		  <tr>
-			<td>下次联系时间：</td>
-			<td><input type='text' id='nextTouchDate' name='nextTouchDate' class="dateClassStyle"  value='2010-03-31' style='width:90%'></td>
-			<td>业务员：</td>
-			<td>
-				<input type='text' id='userName' name='userName' value='系统管理员' style='width:84%' class='combox-input'><img src='${pageContext.request.contextPath}/ui/images/combox_b.jpg' id='user_nameIMG' width='18' height='20' border='0' align='absmiddle'/><script>var user_name = new Roly.Combox('user_name','user_nameIMG');user_name.addItem('系统管理员');user_name.init();</script>
-			</td>
-		  </tr>
-		  <tr>
-			<td>下次联系目标：</td>
-			<td colspan="3">
-				<textarea name="nextTouchAim" rows="4" id="nextTouchAim" style="width:96%"></textarea>
-			</td>
-			</tr>
- 
-		  <tr>
-			<td>备注：</td>
-			<td colspan="3"><textarea name="remark" rows="4" id="remark" style="width:96%"></textarea></td>
-		  </tr>
-		  </table>
+	<s:form name="ActionForm" action="linktouchAction_save.do" namespace="/crm" onSubmit="check();">
+		<s:hidden name="id" />
+		<div class="control">
+			<button type='button' class='button'
+				onMouseOver="this.className='button_over';"
+				onMouseOut="this.className='button';"
+				onClick="document.forms[0].submit()">
+				<img
+					src="${pageContext.request.contextPath}/ui/images/button/baocun.png"
+					border='0' align='absmiddle'>&nbsp;保存
+			</button>
+			<button type='button' class='button'
+				onMouseOver="this.className='button_over';"
+				onMouseOut="this.className='button';"
+				onClick="window.history.go(-1)">
+				<img
+					src="${pageContext.request.contextPath}/ui/images/button/fanhui.png"
+					border='0' align='absmiddle'>&nbsp;返回
+			</button>
 		</div>
-	</td>
-  </tr>
-</table>
- 
-<br>
-<table width="100%" border="0" cellspacing="0" class="tabForm">
-  <tr>
-    <td colspan="4" class="th_head">
-		<div id="menuArrow2" style="background:url(${pageContext.request.contextPath}/ui/images/down.gif) no-repeat center;float:left;">&nbsp;</div>
-		<div id="menuTitle2" style="font-weight:bold">其他信息</div>
-	</td>
-  </tr>
-  <tr>
-  	<td>
-  <div id="menu2">
-		<table width="100%" border="0" cellspacing="0" cellpadding="0">
-		  <tr>
-			<td width="16%">创建人：</td>
-			<td width="34%"><input name="creater" class="disabled" type="text" id="creater" style="width:90%" readonly value="系统管理员"></td>
-			<td width="16%">创建时间：</td>
-			<td width="34%"><input name="createTime" class="disabled" value="2010-03-29 21:14:38" type="text" id="createTime" style="width:90%" readonly>    </td>
-		  </tr>
-		  <tr>
-			<td>修改人：</td>
-			<td><input name="updater" type="text" id="updater" class="disabled" style="width:90%" readonly value="系统管理员"></td>
-			<td>修改时间：</td>
-			<td><input name="updateTime" class="disabled" value="2010-03-29 21:14:38" type="text" id="updateTime" style="width:90%" readonly></td>
-		  </tr>
-		  <tr>
-			<td>所属人：</td>
-			<td>
-			<input name="ownerUser" type="hidden" value="1">
-			<input name="ownerName" type="text" id="ownerName" class="disabled" style="width:90%" readonly value="系统管理员">
-			</td>
-			<td>&nbsp;</td>
-			<td>&nbsp;</td>
-		  </tr>
-  		</table>
-	</div>
-	</td>
-  </tr>
-</table>
-</form>
-<script src="${pageContext.request.contextPath}/ui/js/menu.js" type="text/javascript"></script>
+
+		<table width="100%" border="0" cellspacing="0" class="tabForm">
+			<tr>
+				<th colspan="4" class="th_head">
+					<div id="menuArrow1"
+						style="background:url(${pageContext.request.contextPath}/ui/images/down.gif) no-repeat center;float:left;">&nbsp;</div>
+					<div id="menuTitle1" style="font-weight:bold">基本信息</div></th>
+			</tr>
+			<tr>
+				<td>
+				<div id="menu1">
+						<table width="100%" border="0" cellspacing="0" cellpadding="0">
+							<tr>
+								<td width="16%">联系人：</td>
+								<td width="34%">
+									<s:if test="%{#request.linkmansSelect!=null}">
+										<s:select list="%{#request.linkmansSelect}" id='linkmanId'
+											name='linkmanId' cssStyle='width:90%'
+											listKey="id" listValue="name" 
+											headerKey="" headerValue="-------"/>
+									</s:if>
+								</td>
+								<td width="16%">联系方式：</td>
+								<td width="34%">
+								<s:if test="%{#request.linkFashionsSelect!=null}">
+										<s:select list="%{#request.linkFashionsSelect}"
+											id='linkFashion' name='linkFashion' cssStyle="width:90%"
+											listKey="value" listValue="value" headerKey=""
+											headerValue="-------">
+										</s:select>
+									</s:if>
+								</td>
+							</tr>
+							<tr>
+								<td width="16%">联系时间：</td>
+								<td width="34%">
+								<s:textfield id="linkTime" name="linkTime"
+										cssStyle="width:90%" cssClass="dateClassStyle" />
+								</td>
+								<td width="16%">联系类别：</td>
+								<td width="34%"><s:if
+										test="%{#request.linkTypesSelect!=null}">
+										<s:select list="%{#request.linkTypesSelect}" id='linkType'
+											name='linkType' cssStyle="width:90%" listKey="value"
+											listValue="value" headerKey="" headerValue="-------">
+										</s:select>
+									</s:if>
+								</td>
+							</tr>
+							<tr>
+								<td valign="top">联系记录：</td>
+								<td colspan="3"><s:textarea id="content" name="content"
+										cssStyle="width:96%" rows="4" />
+								</td>
+							</tr>
+
+							<tr>
+								<td>下次联系时间：</td>
+								<td><s:textfield id="nextTouchDate" name="nextTouchDate"
+										cssStyle="width:90%" cssClass="dateClassStyle" />
+								</td>
+								<td>业务员：</td>
+								<td><s:if test="%{#request.userNamesSelect!=null}">
+										<s:select list="%{#request.userNamesSelect}" id='userNameId'
+											name='userNameId' cssStyle="width:90%" listKey="id"
+											listValue="cnname" headerKey="" headerValue="-------">
+										</s:select>
+									</s:if>
+								</td>
+							</tr>
+							<tr>
+								<td valign="top">下次联系目标：</td>
+								<td colspan="3"><s:textarea name="nextTouchAim" rows="4"
+										id="nextTouchAim" cssStyle="width:96%" /></td>
+							</tr>
+
+							<tr>
+								<td valign="top">备注：</td>
+								<td colspan="3"><s:textarea id="remark" name="remark"
+										cssStyle="width:96%" rows="4" />
+								</td>
+							</tr>
+						</table>
+					</div>
+					</td>
+			</tr>
+		</table>
+
+		<br>
+		<table width="100%" border="0" cellspacing="0" class="tabForm">
+			<tr>
+				<td colspan="4" class="th_head">
+					<div id="menuArrow2"
+						style="background:url(${pageContext.request.contextPath}/ui/images/down.gif) no-repeat center;float:left;">&nbsp;</div>
+					<div id="menuTitle2" style="font-weight:bold">其他信息</div></td>
+			</tr>
+			<tr>
+				<td>
+					<div id="menu2">
+						<table width="100%" border="0" cellspacing="0" cellpadding="0">
+							<tr>
+								<td width="16%">创建人：</td>
+								<td width="34%"><s:textfield name="creater" id="creater"
+										cssStyle="width:90%" cssClass="disabled" />
+								</td>
+								<td width="16%">创建日期：</td>
+								<td width="34%"><s:textfield name="createTime"
+										id="createTime" cssStyle="width:90%" cssClass="disabled" />
+								</td>
+							</tr>
+							<tr>
+								<td>修改人：</td>
+								<td><s:textfield name="updater" id="updater"
+										cssStyle="width:90%" cssClass="disabled" />
+								</td>
+								<td>修改日期：</td>
+								<td><s:textfield name="updateTime" id="updateTime"
+										cssStyle="width:90%" cssClass="disabled" />
+								</td>
+							</tr>
+							<tr>
+								<td>所属人：</td>
+								<td>
+									<!-- 保存所有人的姓名 --> <s:textfield name="dispensePerson"
+										id="dispensePerson" cssStyle="width:90%" cssClass="disabled" />
+									<!-- 保存所属人的id --> <s:hidden name="sysUserId" />
+								</td>
+								<td>&nbsp;</td>
+								<td>&nbsp;</td>
+							</tr>
+						</table>
+					</div></td>
+			</tr>
+		</table>
+	</s:form>
+	<script src="${pageContext.request.contextPath}/ui/js/menu.js"
+		type="text/javascript"></script>
 </body>
 </html>

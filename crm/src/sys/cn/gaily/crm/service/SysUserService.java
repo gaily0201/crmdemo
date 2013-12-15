@@ -81,4 +81,11 @@ public interface SysUserService {
 	 */
 	void updateSysUsersPassword(SysUser curSysuser, SysUser sysUser);
 
+	/**
+	 * 根据中文名查找用户
+	 * @param userName
+	 * @return
+	 */
+	SysUser findSysUserByCnname(String userName);
+
 }

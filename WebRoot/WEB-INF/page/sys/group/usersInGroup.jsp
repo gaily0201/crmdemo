@@ -22,7 +22,7 @@ function check() {
 </head>
 
 <body>
-<form name="ActionForm" method="post" action="group.do" onSubmit="return check();">
+<form name="ActionForm" method="post" action="group.do" onSubmit=" check();">
 <input type="hidden" name="method" value="userChange">
 <input type="hidden" name="group_id" value="4">
 <input type="hidden" name="users" value="">

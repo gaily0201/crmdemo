@@ -13,7 +13,7 @@ body {
 </head>
 
 <body>
-<form name="ActionForm" method="post" action="city.do" onSubmit="return check();">
+<form name="ActionForm" method="post" action="city.do" onSubmit=" check();">
 <input type="hidden" name="method" value="update">
 <input type="hidden" name="id" value="1">
 <input type="hidden" name="pid" value="1">

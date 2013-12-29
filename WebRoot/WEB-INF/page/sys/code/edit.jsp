@@ -45,7 +45,7 @@ function preview() {
 </head>
 
 <body>
-<form name="ActionForm" method="post" action="rule.do" onSubmit="return check();">
+<form name="ActionForm" method="post" action="rule.do" onSubmit=" check();">
 <input type="hidden" name="method" value="update">
 <input type="hidden" name="id" value="10">
 <input type="hidden" name="current_code" value="PTYPE-20071015-001">

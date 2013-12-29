@@ -14,7 +14,7 @@ body {
 </head>
 
 <body>
-<form name="ActionForm" method="post" action="province.do" onSubmit="return check();">
+<form name="ActionForm" method="post" action="province.do" onSubmit=" check();">
 <input type="hidden" name="method" value="update">
 <input type="hidden" name="id" value="5">
 <br>

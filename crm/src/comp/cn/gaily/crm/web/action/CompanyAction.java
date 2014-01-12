@@ -83,7 +83,19 @@ public class CompanyAction extends BaseAction implements
 	@Limit(module = "company", privilege = "datePassedLink")
 	public String datePassedLink() throws IllegalAccessException,
 			InvocationTargetException, ParseException {
-
+		// 处理客户等级的下拉选
+		List<SysDictionaryType> gradesSelect = sysDictionaryTypeService
+				.findSysDictionaryTypeByCode(Global.GRADE);
+		request.setAttribute("gradesSelect", gradesSelect);
+		// 处理客户来源下拉选
+		List<SysDictionaryType> sourcesSelect = sysDictionaryTypeService
+				.findSysDictionaryTypeByCode(Global.SOURCE);
+		request.setAttribute("sourcesSelect", sourcesSelect);
+		// 处理客户性质下拉选
+		List<SysDictionaryType> qualitysSelect = sysDictionaryTypeService
+				.findSysDictionaryTypeByCode(Global.QUALITY);
+		request.setAttribute("qualitySelect", qualitysSelect);
+		
 		CompanySearch companySearch = new CompanySearch();
 		BeanUtils.copyProperties(companySearch, companyForm);
 		SysUser curSysuser = SessionUtils.getSysUserFromSession(request);
@@ -134,6 +146,19 @@ public class CompanyAction extends BaseAction implements
 	@Limit(module = "company", privilege = "todayNeedsLink")
 	public String todayNeedsLink() throws IllegalAccessException,
 			InvocationTargetException {
+
+		// 处理客户等级的下拉选
+		List<SysDictionaryType> gradesSelect = sysDictionaryTypeService
+				.findSysDictionaryTypeByCode(Global.GRADE);
+		request.setAttribute("gradesSelect", gradesSelect);
+		// 处理客户来源下拉选
+		List<SysDictionaryType> sourcesSelect = sysDictionaryTypeService
+				.findSysDictionaryTypeByCode(Global.SOURCE);
+		request.setAttribute("sourcesSelect", sourcesSelect);
+		// 处理客户性质下拉选
+		List<SysDictionaryType> qualitysSelect = sysDictionaryTypeService
+				.findSysDictionaryTypeByCode(Global.QUALITY);
+		request.setAttribute("qualitySelect", qualitysSelect);
 
 		CompanySearch companySearch = new CompanySearch();
 		BeanUtils.copyProperties(companySearch, companyForm);
@@ -480,7 +505,7 @@ public class CompanyAction extends BaseAction implements
 		List<SysDictionaryType> kindsSelect = sysDictionaryTypeService
 				.findSysDictionaryTypeByCode(Global.KIND);
 		request.setAttribute("kindsSelect", kindsSelect);
-		
+
 		// 处理经营范围下拉选
 		List<SysDictionaryType> dealinsSelect = sysDictionaryTypeService
 				.findSysDictionaryTypeByCode(Global.DEALIN);

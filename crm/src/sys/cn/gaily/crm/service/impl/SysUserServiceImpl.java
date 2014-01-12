@@ -43,6 +43,7 @@ public class SysUserServiceImpl implements SysUserService {
 			String actionContent = "";
 			if (list != null && list.size() == 1) {
 				SysUser curSysuser = list.get(0);
+				
 				// 处理日志
 				SysOperateLog log = new SysOperateLog();
 				log.setUserName(curSysuser.getName());
@@ -63,8 +64,9 @@ public class SysUserServiceImpl implements SysUserService {
 				log.setActionDate(DateFormatUtils.format(new java.util.Date(),
 						"yyyy-MM-dd HH:mm:ss"));
 				sysOperateLogDao.save(log);
+				
+				return curSysuser; //返回用户
 			}
-			return list.get(0);
 		}
 		return null;
 	}
@@ -169,7 +171,8 @@ public class SysUserServiceImpl implements SysUserService {
 	public List<SysUser> findAllSysUsers() {
 		LinkedHashMap<String, String> orderby = new LinkedHashMap<String, String>();
 		orderby.put("o.id", "asc");
-		return sysUserDao.findObjectsByConditionWithNoPageCache(null,null,orderby);
+		return sysUserDao.findObjectsByConditionWithNoPageCache(null, null,
+				orderby);
 	}
 
 	@Override
@@ -195,13 +198,15 @@ public class SysUserServiceImpl implements SysUserService {
 	@Override
 	@Transactional(readOnly = true)
 	public SysUser findSysUserByCnname(String userName) {
-		if(StringUtils.isNotBlank(userName)){
+		if (StringUtils.isNotBlank(userName)) {
 			String whereHql = "";
 			List paramList = new ArrayList();
 			whereHql = " and o.cnname=?";
 			paramList.add(userName);
-			List<SysUser> sysUser =  sysUserDao.findObjectsByConditionWithNoPage(whereHql, paramList.toArray());
-			if(sysUser.size()==1){
+			List<SysUser> sysUser = sysUserDao
+					.findObjectsByConditionWithNoPage(whereHql,
+							paramList.toArray());
+			if (sysUser.size() == 1) {
 				return sysUser.get(0);
 			}
 		}

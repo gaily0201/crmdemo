@@ -18,6 +18,7 @@ import cn.gaily.crm.dao.SysUserDao;
 import cn.gaily.crm.domain.SysOperateLog;
 import cn.gaily.crm.domain.SysUser;
 import cn.gaily.crm.service.SysUserService;
+import freemarker.template.utility.StringUtil;
 
 @Service(value = "sysUserService")
 @Transactional(readOnly = true)
@@ -209,6 +210,23 @@ public class SysUserServiceImpl implements SysUserService {
 			if (sysUser.size() == 1) {
 				return sysUser.get(0);
 			}
+		}
+		return null;
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public List<SysUser> findSysUserInOrNotInGroup(Integer groupId, String flag) {
+		if(groupId!=null&&StringUtils.isNotBlank(flag)){
+			StringBuffer whereHql  = new StringBuffer("");
+			if("Y".equals(flag)){
+				whereHql.append(" and o.sysUserGroup.id=?");
+			}else if("N".equals(flag)){
+				whereHql.append(" and o.sysUserGroup.id<>?");
+			}
+			List params = new ArrayList();
+			params.add(groupId);
+			return sysUserDao.findObjectsByConditionWithNoPage(whereHql.toString(), params.toArray(), null);
 		}
 		return null;
 	}

@@ -88,4 +88,13 @@ public interface SysUserService {
 	 */
 	SysUser findSysUserByCnname(String userName);
 
+	
+	/**
+	 * 查询出所有在或者不在用户组内的用户
+	 * @param groupId
+	 * @param flag 是否在用户组内
+	 * @return
+	 */
+	List<SysUser> findSysUserInOrNotInGroup(Integer groupId, String flag);
+
 }

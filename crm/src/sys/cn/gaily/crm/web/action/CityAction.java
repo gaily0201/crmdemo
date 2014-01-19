@@ -8,7 +8,7 @@ public class CityAction extends BaseAction {
 	 * 列出省份
 	 * @return
 	 */
-	@Limit(module="city",privilege="list")
+//	@Limit(module="city",privilege="list")
 	public String list(){
 		
 		return "list";

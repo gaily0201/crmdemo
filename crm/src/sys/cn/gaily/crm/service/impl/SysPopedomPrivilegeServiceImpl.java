@@ -1,5 +1,6 @@
 package cn.gaily.crm.service.impl;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 
@@ -84,4 +85,31 @@ public class SysPopedomPrivilegeServiceImpl extends
 		orderby.put("o.id.roleId", "asc");
 		return sysPopedomPrivilegeDao.findObjectsByConditionWithNoPageCache(null,null,orderby);
 	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public List<SysPopedomPrivilege> findSysPopedomPrivilege(String roleId, String module, String privilege) {
+		StringBuffer whereHql = new StringBuffer("");
+		whereHql.append(" and o.id.roleId=?")
+				.append(" and o.id.popedomModule=?")
+				.append(" and o.id.popedomPrivilege=?");
+		List<String> paramList =  new ArrayList<String>();
+		paramList.add(roleId);
+		paramList.add(module);
+		paramList.add(privilege);
+		return sysPopedomPrivilegeDao.findObjectsByConditionWithNoPage(whereHql.toString(),paramList.toArray(),null);
+	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+

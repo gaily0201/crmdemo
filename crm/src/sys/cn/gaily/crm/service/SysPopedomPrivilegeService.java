@@ -32,4 +32,12 @@ public interface SysPopedomPrivilegeService {
 	 */
 	List<SysPopedomPrivilege> findSysPopedomPrivilegesCache();
 
+	/**
+	 * 查询指定的操作组权限是否存在
+	 * @param roleId
+	 * @param module
+	 * @param privilege
+	 */
+	List<SysPopedomPrivilege> findSysPopedomPrivilege(String roleId, String module, String privilege);
+
 }

@@ -8,8 +8,10 @@ import org.apache.commons.lang.StringUtils;
 import cn.gaily.crm.annotation.Limit;
 import cn.gaily.crm.bean.SysUserGroupSearch;
 import cn.gaily.crm.container.ServiceProvinder;
+import cn.gaily.crm.domain.SysUser;
 import cn.gaily.crm.domain.SysUserGroup;
 import cn.gaily.crm.service.SysUserGroupService;
+import cn.gaily.crm.service.SysUserService;
 import cn.gaily.crm.util.DataType;
 import cn.gaily.crm.web.form.SysUserGroupForm;
 import com.opensymphony.xwork2.ModelDriven;
@@ -22,7 +24,29 @@ public class SysUserGroupAction extends BaseAction implements ModelDriven<SysUse
 	
 	private SysUserGroupService sysUserGroupService = (SysUserGroupService) ServiceProvinder
 			.getService("sysUserGroupService");
-
+	private SysUserService sysUserService = (SysUserService) ServiceProvinder.getService("sysUserService");
+//	
+//	@Limit(module="group",privilege="usersInGroup")
+//	public String usersInGroup(){
+//		
+//		String sgroupId = request.getParameter("id");
+//		if(StringUtils.isNotBlank(sgroupId)){
+//			Integer groupId = Integer.parseInt(sgroupId);
+//			//查出所有不在当前部门的用户
+////			List<SysUser> sysUsersNotInGroup = sysUserService.findSysUserInOrNotInGroup(groupId,"Y");
+//			//查出所有在当前部门的用户
+////			List<SysUser> sysUserInGroup = sysUserService.findSysUserInOrNotInGroup(groupId, "N");
+////			
+////			request.setAttribute("sysUsersNotInGroup", sysUsersNotInGroup);
+////			request.setAttribute("sysUserInGroup", sysUserInGroup);
+//			
+//			List<SysUser> sysUsers = sysUserService.findAllSysUsers();
+//			request.setAttribute("sysUsers", sysUsers);
+//			request.setAttribute("sgroupId", sgroupId);
+//		}
+//		return "usersInGroup";
+//	}
+	
 	/**
 	 * 保存部门信息
 	 * 

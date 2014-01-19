@@ -89,19 +89,24 @@ public class LimitInterceptor extends MethodFilterInterceptor {
 //		List<SysPopedomPrivilege> list  = sysPopedomPrivilegeService.findSysPopedomPrivileges();
 	
 		
-		//////////////////启用带缓存查取///////////////////
-		List<SysPopedomPrivilege> list  = sysPopedomPrivilegeService.findSysPopedomPrivilegesCache();
-		if(list!=null&&list.size()>0){
-			for(int i=0;i<list.size();i++){
-				SysPopedomPrivilege s = list.get(i);
-				if(s!=null){
-					if(roleId.equals(s.getId().getRoleId())&&module.equals(s.getId().getPopedomModule())
-							&&privilege.equals(s.getId().getPopedomPrivilege())){
-						flag = true;
-						break;
-					}
-				}
-			}
+		//////////////////不启用带缓存查取///////////////////
+//		List<SysPopedomPrivilege> list  = sysPopedomPrivilegeService.findSysPopedomPrivileges();
+//		sysPopedomPrivilegeService.findSysPopedomPrivilege(roleId, module, privilege);
+//		if(list!=null&&list.size()>0){
+//			for(int i=0;i<list.size();i++){
+//				SysPopedomPrivilege s = list.get(i);
+//				if(s!=null){
+//					if(roleId.equals(s.getId().getRoleId())&&module.equals(s.getId().getPopedomModule())
+//							&&privilege.equals(s.getId().getPopedomPrivilege())){
+//						flag = true;
+//						break;
+//					}
+//				}
+//			}
+//		}
+		List<SysPopedomPrivilege> list = sysPopedomPrivilegeService.findSysPopedomPrivilege(roleId, module, privilege);
+		if(list!=null&&list.size()==1){
+			flag=true;
 		}
 		
 		return flag;

@@ -1,5 +1,6 @@
 <%@ page language="java"  pageEncoding="UTF-8" contentType="text/html; charset=utf-8"%>
-
+<%@ taglib uri="/struts-tags" prefix="s"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
@@ -47,50 +48,10 @@ function check() {
 		<div id="menu1">
 		<table width="100%" border="0" cellspacing="0" cellpadding="0">
 			<tr>
-				<td width="37%">所有用户</td>
-				<td width="22%">&nbsp;</td>
-				<td width="41%">当前部门中的用户</td>
 			</tr>
 			<tr>
 				<td>
-					<select name="lselect" size="1" multiple id="lslt" style="width:100%;height:250px" onDblClick="moveRight()">
-						
-						<option value="12">王卓</option>
-						
-						<option value="11">牛丹丹</option>
-						
-						<option value="8">张宁</option>
-						
-						<option value="7">王楠</option>
-						
-						<option value="5">肖秋水</option>
-						
-						<option value="1">系统管理员</option>
-						
-					</select>
-				</td>
-				<td align="center">
-					<button type='button' class='button' onMouseOver="this.className='button_over';" onMouseOut="this.className='button';"  onClick="moveRight()"><img src="${pageContext.request.contextPath}/ui/images/button/youyi.png" border='0' align='absmiddle'>&nbsp;右移</button><br/><br/>
-					<button type='button' class='button' onMouseOver="this.className='button_over';" onMouseOut="this.className='button';"  onClick="moveLeft()"><img src="${pageContext.request.contextPath}/ui/images/button/zuoyi.png" border='0' align='absmiddle'>&nbsp;左移</button><br/><br/>
-					<button type='button' class='button' onMouseOver="this.className='button_over';" onMouseOut="this.className='button';"  onClick="moveAllRight()"><img src="${pageContext.request.contextPath}/ui/images/button/quanbuyy.png" border='0' align='absmiddle'>&nbsp;全部右移</button><br/><br/>
-					<button type='button' class='button' onMouseOver="this.className='button_over';" onMouseOut="this.className='button';"  onClick="moveAllLeft()"><img src="${pageContext.request.contextPath}/ui/images/button/quanbuzy.png" border='0' align='absmiddle'>&nbsp;全部左移</button>
-				</td>
-				<td>
-					<select name="rselect" size="1" multiple id="rslt" style="width:100%;height:250px" onDblClick="moveLeft()">
-						
-						<option value="10" onDblClick="">王强</option>
-						
-						<option value="9" onDblClick="">之燕燕</option>
-						
-						<option value="6" onDblClick="">懂鹏</option>
-						
-						<option value="4" onDblClick="">朱丹</option>
-						
-						<option value="3" onDblClick="">张大勇</option>
-						
-						<option value="2" onDblClick="">王天</option>
-						
-					</select>
+					
 				</td>
 			</tr>
   		</table>

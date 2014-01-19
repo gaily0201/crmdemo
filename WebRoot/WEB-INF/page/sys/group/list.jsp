@@ -23,6 +23,9 @@
 	function list(){
 		document.forms[0].submit();
 	}
+	function usersInGroup(id) {
+		OpenWin('${pageContext.request.contextPath}/sys/sysUserGroupAction_usersInGroup.do?id='+ id, '', 800, 600);
+	}
 </script>
 </head>
 <body>
@@ -109,13 +112,13 @@
 				id="PowerTable" class="PowerTable">
 				<!-- title -->
 				<tr>
-					<td width="5%" class="listViewThS1"><input type="checkbox"
+					<td width="10%" class="listViewThS1"><input type="checkbox"
 						id="checkall" name="checkall" value="" class="checkbox"
 						onClick="checkAll()"></td>
-					<td width="20%" class="listViewThS1">部门名称</td>
-					<td width="15%" class="listViewThS1">部门负责人</td>
-					<td width="50%" class="listViewThS1">部门职能</td>
-					<td width="10%" class="listViewThS1">人员设置</td>
+					<td width="30%" class="listViewThS1">部门名称</td>
+					<td width="30%" class="listViewThS1">部门负责人</td>
+					<td width="30%" class="listViewThS1">部门职能</td>
+					<!--  <td width="10%" class="listViewThS1">人员设置</td>-->
 				</tr>
 				<s:if test="%{#request.sysUserGroups!=null}">
 					<s:iterator value="%{#request.sysUserGroups}" var="sysUserGroup">
@@ -131,9 +134,9 @@
 							</td>
 							<td>
 								<s:property value="%{#sysUserGroup.incumbent}" /></td>
-							<td>
-								<a href="javascript:OpenWin('${pageContext.request.contextPath}/sys/group/usersInGroup.jsp?id=12')">设置</a>
-							</td>
+							<!-- <td>
+								<a href="#" onClick="usersInGroup('<s:property value="%{#sysUserGroup.id}"/>')">设置</a>
+							</td> -->
 						</tr>
 					</s:iterator>
 				</s:if>

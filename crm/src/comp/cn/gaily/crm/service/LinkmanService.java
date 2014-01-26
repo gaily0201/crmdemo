@@ -1,5 +1,6 @@
 package cn.gaily.crm.service;
 
+import java.util.Collection;
 import java.util.List;
 
 import cn.gaily.crm.bean.LinkmanSearch;
@@ -59,5 +60,11 @@ public interface LinkmanService {
 	 * @return
 	 */
 	List<Linkman> findLinkmanByComp(SysUser curSysuser,Company company);
+
+	/**
+	 * 查询出所有的联系人
+	 * @return
+	 */
+	Collection<? extends Linkman> findAllLinkmans();
 
 }

@@ -13,12 +13,11 @@ import cn.gaily.crm.service.ReportService;
 import cn.gaily.crm.util.JFreeChartUtils;
 
 public class ReportAction extends BaseAction {
-
-
+	private static final long serialVersionUID = 1L;
 	private ReportService reportService = (ReportService) ServiceProvinder.getService("reportService");
 	
 	/**
-	 * 客户分析
+	 * 客户分类分析
 	 * @return
 	 * @throws IOException 
 	 */

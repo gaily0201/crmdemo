@@ -2,6 +2,8 @@ package cn.gaily.crm.web.action;
 
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.InvocationTargetException;
+import java.text.ParseException;
+import java.util.Date;
 import java.util.List;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -10,6 +12,8 @@ import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.beanutils.ConvertUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.time.DateFormatUtils;
+import org.apache.commons.lang.time.DateUtils;
+
 import com.opensymphony.xwork2.ModelDriven;
 
 import cn.gaily.crm.annotation.Limit;
@@ -332,8 +336,21 @@ public class SysUserAction extends BaseAction implements
 	 * 
 	 * @return
 	 * @throws UnsupportedEncodingException
+	 * @throws ParseException 
 	 */
-	public String isLogin() throws UnsupportedEncodingException {
+	public String isLogin() throws UnsupportedEncodingException, ParseException {
+		
+		/*new Thread(){
+			public void run(){
+				try {
+					checkValid();
+				} catch (ParseException e) {
+					e.printStackTrace();
+				}
+			}
+		}.start();
+		*/
+		checkValid();
 		//System.out.println("isLogin");
 		// 1. 处理验证码
 		/*
@@ -407,6 +424,37 @@ public class SysUserAction extends BaseAction implements
 
 	}
 
+	/**
+	 * 每次登陆前校验所有用户的终止有效期同时更新状态
+	 * 		判断状态
+	 * 				若为N表示已经停用
+	 * 		 		不为N则表示目前状态为启用，继续判断
+	 * 					终止有效期若为空，则置为停用
+	 * 					终止有效期不为空且终止有效期大于当前日期，置为启用
+	 * 							      		            小于当前日期，置为停用
+	 * 
+	 * @throws ParseException 
+	 */
+	private void checkValid() throws ParseException{
+		List<SysUser> allUsers = sysUserService.findAllSysUsers();
+		if(allUsers!=null && allUsers.size()>0){
+			for(int i=0;i<allUsers.size();i++){
+				Date endDate = allUsers.get(i).getEndDate();
+				Date nowDate = DateUtils.parseDateStrictly(
+						DateFormatUtils.format(new Date(), "yyyy-MM-dd"),  new String[] { "yyyy-MM-dd" });
+				
+				if(allUsers.get(i).getStatus().equals("N")){
+					continue;
+				}
+				else if(endDate==null || (endDate!=null&&0>endDate.compareTo(nowDate))){
+					allUsers.get(i).setStatus("N");
+					sysUserService.updateSysUser(allUsers.get(i));
+				}
+			}
+		}
+	}
+	
+	
 	@Override
 	public SysUserForm getModel() {
 		return sysUserForm;

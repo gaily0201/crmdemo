@@ -152,9 +152,10 @@ public class CompanyServiceImpl implements CompanyService {
 		if (curSysuser != null && companySearch != null) {
 			String whereHql = "";
 			List paramList = new ArrayList();
-
+			
 			// 只能查自己的客户
-			if (curSysuser.getId() != null) {
+			// 		企业管理部可以查询所有的客户
+			if (curSysuser.getId() != null && curSysuser.getSysUserGroup().getId()!=Integer.parseInt("43")) {
 				whereHql += " and o.sysUser.id=?";
 				paramList.add(curSysuser.getId());
 			}
@@ -227,10 +228,25 @@ public class CompanyServiceImpl implements CompanyService {
 	@Transactional(readOnly = false)
 	public void deleteCompanyByIds(SysUser curSysuser, Integer[] ids) {
 		if (curSysuser != null && ids != null && ids.length > 0) {
+			//处理企业管理部不能删除
+			List<String> lids = new ArrayList<String>();
+			for(int i=0;i<ids.length;i++){
+				lids.add(ids[i]+"");
+			}
+			if(lids.contains("43")){
+				lids.remove("43");
+			}
+			Integer[] iids = new Integer[lids.size()];
+			for(int j=0;j<iids.length;j++){
+				iids[j]=Integer.parseInt(lids.get(j));
+			}
 			
 			// 处理日志
 			for(int i=0;i<ids.length;i++){
 				Company company = companyDao.findObjectById(ids[i]);
+				if(company.equals(companyDao.findObjectById(43))){
+					continue;
+				}
 				SysOperateLog log = new SysOperateLog();
 				log.setUserName(curSysuser.getName());
 				log.setCnname(curSysuser.getCnname());

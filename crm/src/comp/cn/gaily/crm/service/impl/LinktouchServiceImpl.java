@@ -43,8 +43,10 @@ public class LinktouchServiceImpl implements LinktouchService {
 		if (curSysuser != null) {
 			StringBuffer whereHql = new StringBuffer("");
 			List paramList = new ArrayList();
-			whereHql.append(" and o.sysUser.id=?");
-			paramList.add(curSysuser.getId());
+			if(!curSysuser.getSysUserGroup().getId().equals(Integer.parseInt("43"))){
+				whereHql.append(" and o.sysUser.id=?");
+				paramList.add(curSysuser.getId());
+			}
 
 			if (StringUtils.isNotBlank(linktouchSearch.getLinkmanId())) {
 				whereHql.append(" and o.linkman.name=?");

@@ -1,6 +1,7 @@
 package cn.gaily.crm.service.impl;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -154,9 +155,10 @@ public class LinkmanServiceImpl implements LinkmanService {
 		if (curSysuser != null) {
 			String whereHql = "";
 			List paramList = new ArrayList();
-
+			
+			
 			// 只能查自己的客户
-			if (curSysuser.getId() != null) {
+			if (curSysuser.getId() != null && curSysuser.getSysUserGroup().getId()!=Integer.parseInt("43")) {
 				whereHql += " and o.sysUser.id=?";
 				paramList.add(curSysuser.getId());
 			}
@@ -239,5 +241,11 @@ public class LinkmanServiceImpl implements LinkmanService {
 			}
 		}
 		return null;
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public Collection<? extends Linkman> findAllLinkmans() {
+		return linkmanDao.findObjectsByConditionWithNoPage();
 	}
 }

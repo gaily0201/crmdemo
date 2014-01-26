@@ -64,7 +64,12 @@
 
 								<td>部门负责人</td>
 								<td>
-									<s:textfield name="principal" cssClass="input" cssStyle="width:90%" />
+									<!-- <s:textfield name="principal" cssClass="input" cssStyle="width:90%" /> -->
+									<s:if test="#request.sysUsersSelect!=null">
+			   								<s:select list="#request.sysUsersSelect"  id='principal'  name="principal" cssStyle='width:90%'
+					      							    listKey="cnname" listValue="cnname" headerKey=""  headerValue="--------">
+			  								 </s:select>
+		 								</s:if>
 								</td>
 							</tr>
 							<tr>

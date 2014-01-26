@@ -34,11 +34,10 @@ public class SysMenuPrivilegeServiceImpl implements SysMenuPrivilegeService {
 			
 			sysMenuPrivilegeDao.deleteObjects(list);
 		}
-		
 		//增加权限到权限组中
 		if(StringUtils.isNotBlank(roleId)&&menuModules!=null&&menuModules.length>0){
 			for(int i=0;i<menuModules.length;i++){
-				if(StringUtils.isNotBlank(menuModules[i])){
+				if(StringUtils.isNotBlank(menuModules[i])&&!menuModules[i].trim().equals(",")){
 					String[] str = menuModules[i].split(",");
 					SysMenuPrivilege s = new SysMenuPrivilege();
 					SysMenuPrivilegeId id = new SysMenuPrivilegeId();

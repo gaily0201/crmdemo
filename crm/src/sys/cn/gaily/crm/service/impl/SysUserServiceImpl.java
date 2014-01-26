@@ -9,6 +9,7 @@ import javax.annotation.Resource;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.time.DateFormatUtils;
+import org.hibernate.type.DateType;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,6 +19,7 @@ import cn.gaily.crm.dao.SysUserDao;
 import cn.gaily.crm.domain.SysOperateLog;
 import cn.gaily.crm.domain.SysUser;
 import cn.gaily.crm.service.SysUserService;
+import cn.gaily.crm.util.DataType;
 import freemarker.template.utility.StringUtil;
 
 @Service(value = "sysUserService")
@@ -122,7 +124,19 @@ public class SysUserServiceImpl implements SysUserService {
 	@Transactional(readOnly = false)
 	public void deleteSysUsersByIds(Integer... ids) {
 		// TODO Auto-generated method stub
-		sysUserDao.deleteByIds((java.io.Serializable[]) ids);
+		List<Integer> listids = new ArrayList<Integer>();
+		for(int m=0;m<ids.length;m++){
+			listids.add(ids[m]);
+		}
+		if(listids.contains(Integer.parseInt("1"))){
+			listids.remove(0);
+		}
+		Integer[] lids = new Integer[listids.size()];
+		for(int i=0;i<lids.length;i++){
+			lids[i]=listids.get(i);
+		}
+		
+		sysUserDao.deleteByIds((java.io.Serializable[]) lids);
 	}
 
 	@Override

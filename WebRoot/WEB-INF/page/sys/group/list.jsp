@@ -17,8 +17,26 @@
 	}
 
 	function deleteIds() {
-		document.forms[1].submit();
-		
+		var count=0;
+	 	var ids="";
+		   //遍历所有的复选框
+		   $("input[type='checkbox'][name='ids']").each(function(index,data){
+		     if(this.checked){   //如果复选框处于选中状态
+		        count++;         //count加1
+		        if(count==1){    
+		            ids=$(this).val();   //43,44,45   
+		        }else{
+		            ids=ids+","+$(this).val();
+		        }
+		     }
+		     //如果没有被选中
+		 });
+	 	if(count==0){
+		       alert("必须有一条记录被选中!!!");
+		       return false;
+		 }else{
+			document.forms[1].submit();
+		}
 	}
 	function list(){
 		document.forms[0].submit();
@@ -49,7 +67,12 @@
 					<table width="100%" border="0" cellspacing="0" cellpadding="0" name="base" id="base">
 						<tr>
 							<td width="38%" nowrap="nowrap">部门名称：
-								<s:textfield name="name" type="text" id="name" cssStyle="width:140px"/>
+								<!-- <s:textfield name="name" type="text" id="name" cssStyle="width:140px"/> -->
+								<s:if test="#request.sysUserGroupsSelect!=null">
+			   								<s:select list="#request.sysUserGroupsSelect"  id='name'  name="name" cssStyle='width:140px'
+					      							    listKey="name" listValue="name" headerKey=""  headerValue="--------">
+			  								 </s:select>
+		 								</s:if>
 							</td>
 							<td width="39%" nowrap="nowrap">&nbsp;</td>
 							<td width="23%" align="center">

@@ -87,7 +87,11 @@ public class SysUserGroupAction extends BaseAction implements ModelDriven<SysUse
 		sysUserGroupSearch.setName(sysUserGroupForm.getName());
 
 		List<SysUserGroup> sysUserGroups = sysUserGroupService.findSysUserGroups(sysUserGroupSearch);
-
+		
+		List<SysUserGroup> sysUserGroupsSelect = sysUserGroupService.findAllSysGroups();
+		request.setAttribute("sysUserGroupsSelect", sysUserGroupsSelect);
+		
+		
 		request.setAttribute("sysUserGroups", sysUserGroups);
 
 		return "list";
@@ -100,6 +104,10 @@ public class SysUserGroupAction extends BaseAction implements ModelDriven<SysUse
 	 */
 	@Limit(module="group",privilege="add")
 	public String add() {
+		
+		List<SysUser> sysUsers = sysUserService.findAllSysUsers();
+		request.setAttribute("sysUsersSelect", sysUsers);
+		
 		return "add";
 	}
 
@@ -111,9 +119,11 @@ public class SysUserGroupAction extends BaseAction implements ModelDriven<SysUse
 	 * @throws IllegalAccessException
 	 */
 	@Limit(module="group",privilege="edit")
-	public String edit() throws IllegalAccessException,
-			InvocationTargetException {
-
+	public String edit() throws IllegalAccessException, InvocationTargetException {
+		
+		List<SysUser> sysUsers = sysUserService.findAllSysUsers();
+		request.setAttribute("sysUsersSelect", sysUsers);
+		
 		// 获取部门id
 		String sid = sysUserGroupForm.getId();
 		if (StringUtils.isNotBlank(sid)) {
@@ -125,7 +135,7 @@ public class SysUserGroupAction extends BaseAction implements ModelDriven<SysUse
 
 			// 处理部门编辑页面显示要编辑的信息，放在湛顶
 			BeanUtils.copyProperties(sysUserGroupForm, sysUserGroup);
-
+			
 			return "edit";
 		}
 

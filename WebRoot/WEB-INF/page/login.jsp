@@ -142,7 +142,7 @@ body {
 	</TD>
 </TR>
 <TR>
-	<TD align="center"><br><a href="http://www.weibo.com/superemon/home" target="_blank">南昌大学科学技术学院</a></TD>
+	<TD align="center"><br><a href="http://www.ndkj.com.cn" target="_blank">南昌大学科学技术学院</a></TD>
 </TR>
 <TR>
 	<TD height="5">&nbsp;</TD>

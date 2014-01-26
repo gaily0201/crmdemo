@@ -25,6 +25,29 @@
 	function forward(strURL) {
 		window.location = strURL;
 	}
+	
+ function deleteComp(){
+ 	var count=0;
+ 	var ids="";
+	   //遍历所有的复选框
+	   $("input[type='checkbox'][name='ids']").each(function(index,data){
+	     if(this.checked){   //如果复选框处于选中状态
+	        count++;         //count加1
+	        if(count==1){    
+	            ids=$(this).val();   //43,44,45   
+	        }else{
+	            ids=ids+","+$(this).val();
+	        }
+	     }
+	     //如果没有被选中
+	 });
+ 	if(count==0){
+	       alert("必须有一条记录被选中!!!");
+	       return false;
+	 }else{
+ 		document.forms[1].submit()
+ 	}
+ }
 </script>
 </head>
 
@@ -118,7 +141,7 @@
 		<button type='button' class='button'
 			onMouseOver="this.className='button_over';"
 			onMouseOut="this.className='button';"
-			onClick="document.forms[1].submit()">
+			onClick="deleteComp()">
 			<img
 				src="${pageContext.request.contextPath}/ui/images/button/shanchu.png"
 				border='0' align='absmiddle'>&nbsp;删除

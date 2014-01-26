@@ -145,6 +145,12 @@ public class LinktouchAction extends BaseAction implements
 			linktouch.setUpdateTime(DateFormatUtils.format(new Date(), "yyyy-MM-dd HH:mm:ss"));
 			linktouchService.updateLinktouch(curSysuser, linktouch);
 			
+			if(linktouch.getNextTouchDate()!=null){
+				//同步更新客户下次联系时间
+				Integer[] compid = new Integer[]{linktouch.getLinkman().getCompany().getId()};
+				companyService.updateNextTouchTime(curSysuser, compid, linktouch.getNextTouchDate());
+			}
+			
 			return "listAction";
 		}
 		return null;
@@ -249,11 +255,19 @@ public class LinktouchAction extends BaseAction implements
 			linktouch.setDispenseDate(linktouchForm.getCreateTime());
 			linktouch.setSysUser(curSysuser);
 			linktouchService.saveLinktouch(curSysuser, linktouch);
+			
+			if(linktouch.getNextTouchDate()!=null){
+				//同步更新客户下次联系时间
+				Integer[] compid = new Integer[]{linktouch.getLinkman().getCompany().getId()};
+				companyService.updateNextTouchTime(curSysuser, compid, linktouch.getNextTouchDate());
+			}
+			
 			return "listAction";
 		}
 		return null;
 	}
 
+	
 	/**
 	 * 新增联系记录
 	 * 
@@ -318,9 +332,13 @@ public class LinktouchAction extends BaseAction implements
 		List<Linkman> linkmansSelect = new ArrayList<Linkman>();
 		if (curSysuser != null && companys != null) {
 			// 联系人下拉选,查出所有属于自己的联系人
-			for (int i = 0; i < companys.size(); i++) {
-				linkmansSelect.addAll(linkmanService.findLinkmanByComp(
-						curSysuser, companys.get(i)));
+			if(curSysuser.getSysUserGroup().getId()==Integer.parseInt("43")){
+				linkmansSelect.addAll(linkmanService.findAllLinkmans());
+			}else{
+				for (int i = 0; i < companys.size(); i++) {
+					linkmansSelect.addAll(linkmanService.findLinkmanByComp(
+							curSysuser, companys.get(i)));
+				}
 			}
 			request.setAttribute("linkmansSelect", linkmansSelect);
 			// 联系方式下拉选

@@ -205,7 +205,7 @@ CREATE TABLE `sys_code_rule` (
 
 /*Data for the table `sys_code_rule` */
 
-insert  into `sys_code_rule`(`id`,`module`,`areaPrefix`,`areaTime`,`glideBit`,`currentCode`,`tabName`,`available`,`nextseq`,`curDate`) values (1,'客户资料','C','yyyy-MM-dd',3,'C-2014-01-27-007','c_company','N','008','20140127'),(2,'联系人','MAN','yyyyMMdd',3,'MAN-20140127-005','c_linkman','N','006','20140127');
+insert  into `sys_code_rule`(`id`,`module`,`areaPrefix`,`areaTime`,`glideBit`,`currentCode`,`tabName`,`available`,`nextseq`,`curDate`) values (1,'客户资料','C','yyyy-MM-dd',3,'C-2014-01-27-008','c_company','N','009','20140127'),(2,'联系人','MAN','yyyyMMdd',3,'MAN-20140127-005','c_linkman','N','006','20140127');
 
 /*Table structure for table `sys_dictionary_type` */
 
@@ -273,11 +273,11 @@ CREATE TABLE `sys_operate_log` (
   `actionContent` text,
   `actionDate` varchar(30) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=454 DEFAULT CHARSET=gb2312;
+) ENGINE=InnoDB AUTO_INCREMENT=457 DEFAULT CHARSET=gb2312;
 
 /*Data for the table `sys_operate_log` */
 
-insert  into `sys_operate_log`(`id`,`userName`,`cnname`,`actionType`,`actionContent`,`actionDate`) values (450,'tangchunyan','唐春燕',NULL,'唐春燕于2014-01-27 15:11:14 试图登录系统，但被系统阻止！','2014-01-27 15:11:14'),(451,'admin','超级管理员','登录系统','超级管理员于 2014-01-27 15:11:18 登录系统','2014-01-27 15:11:18'),(452,'xiajianguo','夏建国','登录系统','夏建国于 2014-01-27 15:12:04 登录系统','2014-01-27 15:12:04'),(453,'admin','超级管理员','登录系统','超级管理员于 2014-01-27 15:12:42 登录系统','2014-01-27 15:12:42');
+insert  into `sys_operate_log`(`id`,`userName`,`cnname`,`actionType`,`actionContent`,`actionDate`) values (450,'tangchunyan','唐春燕',NULL,'唐春燕于2014-01-27 15:11:14 试图登录系统，但被系统阻止！','2014-01-27 15:11:14'),(451,'admin','超级管理员','登录系统','超级管理员于 2014-01-27 15:11:18 登录系统','2014-01-27 15:11:18'),(452,'xiajianguo','夏建国','登录系统','夏建国于 2014-01-27 15:12:04 登录系统','2014-01-27 15:12:04'),(453,'admin','超级管理员','登录系统','超级管理员于 2014-01-27 15:12:42 登录系统','2014-01-27 15:12:42'),(454,'admin','超级管理员','登录系统','超级管理员于 2014-01-27 16:16:04 登录系统','2014-01-27 16:16:04'),(455,'admin','超级管理员','登录系统','超级管理员于 2014-01-27 20:30:57 登录系统','2014-01-27 20:30:57'),(456,'admin','超级管理员','登录系统','超级管理员于 2014-01-27 21:15:25 登录系统','2014-01-27 21:15:25');
 
 /*Table structure for table `sys_popedom` */
 
@@ -402,7 +402,7 @@ CREATE TABLE `sys_user_group` (
   `principal` varchar(50) DEFAULT NULL,
   `incumbent` varchar(200) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=56 DEFAULT CHARSET=gb2312;
+) ENGINE=InnoDB AUTO_INCREMENT=55 DEFAULT CHARSET=gb2312;
 
 /*Data for the table `sys_user_group` */
 

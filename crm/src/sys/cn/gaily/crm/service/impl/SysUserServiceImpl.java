@@ -127,7 +127,7 @@ public class SysUserServiceImpl implements SysUserService {
 		List<Integer> listids = new ArrayList<Integer>();
 		for(int m=0;m<ids.length;m++){
 			listids.add(ids[m]);
-		}
+		} //不删除超级管理员
 		if(listids.contains(Integer.parseInt("1"))){
 			listids.remove(0);
 		}

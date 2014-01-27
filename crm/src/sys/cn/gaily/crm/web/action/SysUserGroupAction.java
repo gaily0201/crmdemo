@@ -1,6 +1,7 @@
 package cn.gaily.crm.web.action;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 import java.util.List;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang.StringUtils;
@@ -171,8 +172,20 @@ public class SysUserGroupAction extends BaseAction implements ModelDriven<SysUse
 		
 		//获取部门的id
 		String[] sids = request.getParameterValues("ids");
-		Integer[] ids = DataType.converterStringArray2IntegerArray(sids);
-		if(ids!=null){
+		
+		if(sids!=null&&sids.length>0){
+			//不删除企业管理部
+			List<String> sid = new ArrayList<String>();
+			for(int i=0;i<sids.length;i++){
+				if(!"43".equals(sids[i])){
+					sid.add(sids[i]);
+				}
+			}
+			String[] id = new String[sid.size()];
+			for(int j=0;j<sid.size();j++){
+				id[j]=sid.get(j);
+			}
+			Integer[] ids = DataType.converterStringArray2IntegerArray(id);
 			sysUserGroupService.deleteSysUserGroupsByIds(ids);
 		}
 		return "listAction";

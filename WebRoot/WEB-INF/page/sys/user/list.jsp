@@ -94,7 +94,7 @@ function  disable(){
 				        align='absmiddle'>&nbsp;搜索</button>
       		    <button type='button' class='button' 
       			        onMouseOver="this.className='button_over';" onMouseOut="this.className='button';" 
-          			    onClick="forward('user.do?method=search')">
+          			    onClick="">
           			    <img src="${pageContext.request.contextPath}/ui/images/button/qingkong.png" border='0' 
           			    align='absmiddle'>&nbsp;清空</button>
 			</div>

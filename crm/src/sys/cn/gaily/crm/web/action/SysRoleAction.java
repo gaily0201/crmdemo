@@ -1,6 +1,7 @@
 package cn.gaily.crm.web.action;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.beanutils.BeanUtils;
@@ -204,9 +205,23 @@ public class SysRoleAction extends BaseAction implements
 	public String delete() {
 
 		String[] ids = request.getParameterValues("ids");
-
+		
+		//企业管理部不能删除
 		if (ids != null && ids.length > 0) {
-			sysRoleService.deleteSysRolesByIds(ids);
+			List<String> iids = new ArrayList<String>();
+			for(int i=0;i<ids.length;i++){
+				if("402882e74237b685014237b70ee50003".equals(ids[i])){
+					continue;
+				}else{
+					iids.add(ids[i]);
+				}
+			}
+			String[] id = new String[iids.size()];
+			for(int j=0;j<iids.size();j++){
+				id[j] = iids.get(j);
+			}
+			
+			sysRoleService.deleteSysRolesByIds(id);
 			return "listAction";
 		}
 
